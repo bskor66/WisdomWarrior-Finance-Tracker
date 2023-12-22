@@ -6,7 +6,7 @@ const routes = require('./controllers');
 const helpers = require('./utils/helpers');
 const sequelize = require('./config/connection');
 const { Session } = require('inspector');
-require('dontenv').config;
+require('dotenv').config;
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 

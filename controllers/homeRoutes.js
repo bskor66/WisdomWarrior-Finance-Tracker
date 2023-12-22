@@ -3,7 +3,11 @@ const { User } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
-  res.json('');
+  try {
+    res.render('homepage');
+  } catch (err) {
+    json.status(500).json(err);
+  }
 });
 
 module.exports = router;
