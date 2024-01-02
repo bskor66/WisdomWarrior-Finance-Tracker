@@ -1,20 +1,22 @@
 [
     {
+        "is_expense": true,
         "transaction_type": "Expense",
         "transaction_amount": 50.00,
         "user_id": 1
     },
     {
+        "is_expense": false,
         "transaction_type": "Income",
         "transaction_amount": 1000.00,
         "user_id": 2
     },
-    {
+    {   "is_expense": true,
         "transaction_type": "Expense",
         "transaction_amount": 30.00,
         "user_id": 3
     },
-    {
+    {   "is_expense": false,
         "transaction_type": "Income",
         "transaction_amount": 500.00,
         "user_id": 1

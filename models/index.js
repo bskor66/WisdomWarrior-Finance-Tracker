@@ -1,14 +1,45 @@
-const { User } = require('./User');
-const { transactions } = require('./transactions')
-const { category } = require('./categories')
+const User = require('./User');
+const Transactions = require('./Transactions')
+const Categories = require('./Categories')
+const Budgets = require('./Budgets')
 
-User.hasMany(transactions, {
-    foreignKey: 'reader_id',
-    onDelete: 'CASCADE',
-  });
-  transactions.belongsTo(User, {
-    foreignKey: 'reader_id',
-  });
-  
+// one to many relationship - one user, many transactions
+User.hasMany(Transactions, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
+Transactions.belongsTo(User, {
+  foreignKey: 'user_id',
+});
 
-module.exports = { User, transaction, category };
+// one to many - many transactions, one category
+Categories.hasMany(Transactions, {
+  foreignKey: 'category_id',
+  onDelete: 'CASCADE',
+});
+Transactions.belongsTo(Categories, {
+  foreignKey: 'category_id',
+})
+
+User.hasMany(Budgets, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
+Budgets.belongsTo(User, {
+  foreignKey: 'user_id',
+})
+
+Budgets.hasOne(Categories, {
+  foreignKey: 'category_id',
+  onDelete: 'CASCADE'
+});
+Categories.belongsTo(Budgets, {
+  foreignKey: 'category_id'
+});
+
+// Categories.belongsTo(User, {
+//   foreignKey: 'category_id',
+// });
+
+
+module.exports = { User, Transactions, Categories, Budgets };
