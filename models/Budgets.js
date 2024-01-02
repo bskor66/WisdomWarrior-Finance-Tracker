@@ -1,51 +1,40 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+class Budgets extends Model { }
 
-class Transactions extends Model { }
-
-Transactions.init(
+Budgets.init(
   {
-    //ID of transaction
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    // True = is expense False = is Income
-    is_expense: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
-    // Amount of Transaction
-    transaction_amount: {
+    budget: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    // FK Id of User
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'User',
-        key: 'id',
-      },
-    },
-    // Fk ID of Categories
-    category_id: {
+    categories_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'categories',
         key: 'id',
       },
     },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
-    timestamps: true,
+    timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'transaction'
+    modelName: 'categories'
   }
 );
-
-module.exports = Transactions
+module.exports = Budgets;
