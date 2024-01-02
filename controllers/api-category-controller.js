@@ -1,5 +1,5 @@
 // will require sequelize connection and models to perform logic
-const User = require('../models/User');
+const Categories = require('../models/Categories');
 const sequelize = require('./config/connection');
 
 module.exports = {
