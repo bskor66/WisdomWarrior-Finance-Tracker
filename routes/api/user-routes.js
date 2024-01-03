@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const userController = require('../../controllers/api-user-controller');
+
+// route: api/users/
+
 // get all users
 router.get('/', userController.indexAllUsers)
 // get one user by id
