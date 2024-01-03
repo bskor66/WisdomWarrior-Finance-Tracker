@@ -32,10 +32,10 @@ const postUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const updateUser = await User.update(req.body, {
-        where: {
-          id: req.params.id
-        }
+      where: {
+        id: req.params.id
       }
+    }
     )
     res.status(204).json('User updated')
   } catch (err) {
@@ -44,12 +44,16 @@ const updateUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-  const deleteUser = await User.destroy({
-    where: {
-      id: req.params.id
-    }
-  })
-  res.status(200).json('User deleted')
+  try {
+    const deleteUser = await User.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.status(200).json('User deleted')
+  } catch (err) {
+    res.status(500).json(err)
+  }
 }
 
 module.exports = {
