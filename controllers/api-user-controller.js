@@ -18,7 +18,7 @@ const indexAllUsers = async (req, res) => {
 const indexUser = async (req, res) => {
   try {
     const userId = req.params.id
-    const getOneUser = await User.findByPk(userId,{
+    const getOneUser = await User.findByPk(userId, {
       attributes: {
         exclude: ['password']
       }
@@ -34,9 +34,22 @@ const indexUser = async (req, res) => {
 }
 
 const postUser = async (req, res) => {
-  const newUser = await User.create(req.body) //planned to change, using for testing
-  res.json(newUser)
-}
+  try {
+    const { first_name: firstName, last_name: lastName, email: userEmail, password: userPassword } = req.body
+    if (!(firstName && lastName && userEmail && userPassword)) {
+      return res.status(400).json('invalid entry')
+    }
+    const newUser = await User.create({
+      first_name: firstName,
+      last_name: lastName,
+      email: userEmail,
+      password: userPassword
+    }) //planned to change, using for testing
+    res.json(newUser)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+  }
 
 const updateUser = async (req, res) => {
   try {
@@ -65,10 +78,17 @@ const deleteUser = async (req, res) => {
   }
 }
 
+const loginUser = () => {
+}
+const logoutUser = () => {
+}
+
 module.exports = {
   indexAllUsers,
   indexUser,
   postUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  loginUser,
+  logoutUser
 }
