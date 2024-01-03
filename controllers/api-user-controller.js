@@ -1,6 +1,6 @@
 // will require sequelize connection and models to perform logic
-const User = require('../models/User');
-const sequelize = require('../config/connection');
+// const sequelize = require('../config/connection');
+const { User } = require('../models');
 
 const indexAllUsers = async (req, res) => {
   try {
