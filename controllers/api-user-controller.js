@@ -1,6 +1,7 @@
-// will require sequelize connection and models to perform logic
 // const sequelize = require('../config/connection');
 const { User } = require('../models');
+
+//* route: api/users/
 
 const indexAllUsers = async (req, res) => {
   try {
@@ -44,7 +45,7 @@ const postUser = async (req, res) => {
       last_name: lastName,
       email: userEmail,
       password: userPassword
-    }) //planned to change, using for testing
+    })
     res.json(newUser)
   } catch (err) {
     res.status(500).json(err)
