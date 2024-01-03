@@ -100,7 +100,7 @@ const loginUser = async (req, res) => {
 const logoutUser = async (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
-      res.status(204).json('Session destroyed').end();
+      res.status(204).json('Logged out').end();
     });
   } else {
     res.status(404).json('No user logged in').end();
