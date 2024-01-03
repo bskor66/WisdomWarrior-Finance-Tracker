@@ -30,14 +30,21 @@ Transactions.init(
         key: 'id',
       },
     },
-    // Fk ID of Categories
-    category_id: {
+    budget_id: {
       type: DataTypes.INTEGER,
+      allowNull: true,
       references: {
-        model: 'categories',
-        key: 'id',
-      },
-    },
+        model: 'budgets',
+        key: 'id'
+      }
+     }
+    // category_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: 'categories',
+    //     key: 'id',
+    //   },
+    // },
   },
   {
     sequelize,

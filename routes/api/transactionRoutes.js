@@ -1,4 +1,7 @@
-// const router = require('express').Router();
-// const { Transactions } = require('../../models');
+const express = require('express');
+const router = express.Router();
+const transactionController = require('../../controllers/api-transaction-controller');
 
-// module.exports = router;
+router.get('/', transactionController.getAllTransactions);
+
+module.exports = router;

@@ -1,25 +1,28 @@
+const { Budgets, User } = require('../models');
 const sequelize = require('../config/connection');
-const { User, transaction, category } = require('../models');
 
-const userSeedData = require('./userData.json');
-const transactionsSeedData = require('./transactionsData.json');
-const categoriesSeedData = require('./categoriesData.json');
+const budgetData = [
+  {
+    name: 'Budget 1',
+    amount: 500,
+    user_id: 1,
+  }
+  // Add more budgets as needed
+];
+const userData = [
+  {
+    first_name: "new",
+    last_name: "name",
+    email: "emaasdfil@email.com",
+    password: "12345asdf78"
+  }
+  // Add more budgets as needed
+];
 
-const seedDatabase = async () => {
-  await sequelize.sync({ force: true });
+const seedUser = () => User.bulkCreate(userData);
+const seedBudgets = () => Budgets.bulkCreate(budgetData);
 
-  const Users = await User.bulkCreate(userSeedData, {
-    individualHooks: true,
-    returning: true,
-  });
-  const transactions = await Transaction.bulkCreate(transactionsSeedData, {
-    returning: true,
-  });
-
-  const categories = await Category.bulkCreate(categoriesSeedData, {
-    returning: true,
-  });
-  process.exit(0);
-};
-
-seedDatabase();
+sequelize.sync({ force: true }).then(() => {
+  seedUser()
+  seedBudgets()
+})

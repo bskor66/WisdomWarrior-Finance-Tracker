@@ -1,4 +1,8 @@
-// const router = require('express').Router();
-// const { Budgets } = require('../../models');
+const express = require('express');
+const router = express.Router();
+const budgetController = require('../../controllers/api-budget-controller');
 
-// module.exports = router;
+// API route to get all budgets
+router.get('/', budgetController.getAllBudgets);
+
+module.exports = router;
