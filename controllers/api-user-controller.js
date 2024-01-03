@@ -16,7 +16,6 @@ const indexAllUsers = async (req, res) => {
     res.status(500).json(err)
   }
 }
-
 const indexUser = async (req, res) => {
   try {
     const userId = req.params.id
@@ -34,7 +33,6 @@ const indexUser = async (req, res) => {
     res.status(500).json(err)
   }
 }
-
 const postUser = async (req, res) => {
   try {
     const { first_name: firstName, last_name: lastName, email: userEmail, password: userPassword } = req.body
@@ -49,13 +47,13 @@ const postUser = async (req, res) => {
     })
     req.session.save(()=>{
       req.session.logged_in = true
+      req.session.user_id = createNewUser.id
       res.status(200).json(createNewUser)
     })
   } catch (err) {
     res.status(500).json(err)
   }
   }
-
 const updateUser = async (req, res) => {
   try {
     const updateUser = await User.update(req.body, {
@@ -69,7 +67,6 @@ const updateUser = async (req, res) => {
     res.status(500).json(err)
   }
 }
-
 const deleteUser = async (req, res) => {
   try {
     const deleteUser = await User.destroy({
@@ -82,7 +79,6 @@ const deleteUser = async (req, res) => {
     res.status(500).json(err)
   }
 }
-
 const loginUser = async (req, res) => {
   const findUserEmail = await User.findOne({
     where: {
@@ -97,6 +93,7 @@ const loginUser = async (req, res) => {
 
   req.session.save(()=>{
     req.session.logged_in = true;
+    req.session.user_id = findUserEmail.id
     res.status(200).json('Successful login')
   })
 }
