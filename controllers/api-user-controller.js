@@ -4,7 +4,11 @@ const { User } = require('../models');
 
 const indexAllUsers = async (req, res) => {
   try {
-    const allUsers = await User.findAll()
+    const allUsers = await User.findAll({
+      attributes: {
+        exclude: ['password']
+      }
+    })
     res.status(200).json(allUsers)
   } catch (err) {
     res.status(500).json(err)
@@ -14,7 +18,12 @@ const indexAllUsers = async (req, res) => {
 const indexUser = async (req, res) => {
   try {
     const userId = req.params.id
-    const getOneUser = await User.findByPk(userId)
+    const getOneUser = await User.findByPk(userId,{
+      attributes: {
+        exclude: ['password']
+      }
+    }
+    )
     if (!getOneUser) {
       return res.status(404).json('No user found with that ID')
     }

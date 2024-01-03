@@ -1,11 +1,11 @@
 // will require sequelize connection and models to perform logic
-const { Transactions, User } = require('../models');
+const { Transactions, User, Budgets } = require('../models');
 const sequelize = require('../config/connection');
 
 const getAllTransactions = async (req, res) => {
   try {
     const transactions = await Transactions.findAll({
-      include: [User],
+      include: [User, Budgets]
     });
     res.json(transactions);
   } catch (error) {
