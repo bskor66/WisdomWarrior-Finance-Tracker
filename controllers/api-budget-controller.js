@@ -1,5 +1,5 @@
 // will require sequelize connection and models to perform logic
-const { Budgets, Categories, User } = require('../models/');
+const { Budgets, User } = require('../models/');
 // const Categories = require('../models/')
 // const User = require('../models/')
 const sequelize = require('../config/connection');
