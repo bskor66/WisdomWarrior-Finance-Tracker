@@ -7,15 +7,10 @@ const sequelize = require('../config/connection');
 const getAllBudgets = async (req, res) => {
   try {
     const budgets = await Budgets.findAll({
-      include:
-        [
-          {
-            model: User
-          }
-        ],
-        attributes: {
-          exclude: ['user_id']
-        }
+      include: [User],
+      attributes: {
+        exclude: ['user_id']
+      }
     }
     );
     res.json(budgets);
