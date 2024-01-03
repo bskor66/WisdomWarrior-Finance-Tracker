@@ -1,18 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Budgets = require('../models/Budgets');
+const budgetController = require('../../controllers/api-budget-controller');
 
 // API route to get all budgets
-router.get('/api/budgets', async (req, res) => {
-  try {
-    const budgets = await Budgets.findAll({
-      include: ['categories', 'user'], 
-    });   
-    res.json(budgets);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+router.get('/', budgetController.getAllBudgets);
 
 module.exports = router;

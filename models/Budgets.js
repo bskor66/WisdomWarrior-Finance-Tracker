@@ -10,17 +10,21 @@ Budgets.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    budget: {
+    name : {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    amount: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    categories_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'categories',
-        key: 'id',
-      },
-    },
+    // categories_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: 'categories',
+    //     key: 'id',
+    //   },
+    // },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -34,7 +38,7 @@ Budgets.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'categories'
+    modelName: 'budgets'
   }
 );
 module.exports = Budgets;
