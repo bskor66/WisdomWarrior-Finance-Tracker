@@ -80,22 +80,32 @@ const deleteUser = async (req, res) => {
   }
 }
 const loginUser = async (req, res) => {
-  const findUserEmail = await User.findOne({
-    where: {
-      email: req.body.email
+  try {
+    if (!req.body.email || !req.body.password){
+      res.status(400).json('Please provide your credentials')
+      return;
     }
-  })
-  if (!findUserEmail) return res.status(400).json('Incorrect email or password')
+      
+    const findUserEmail = await User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
 
-  const validatePassword = await findUserEmail.checkPassword(req.body.password)
+    if (!findUserEmail) return res.status(400).json('Incorrect email or password')
 
-  if (!validatePassword) return res.status(400).json('Incorrect email or password')
-
-  req.session.save(()=>{
-    req.session.logged_in = true;
-    req.session.user_id = findUserEmail.id
-    res.status(200).json('Successful login')
-  })
+    const validatePassword = findUserEmail.checkPassword(req.body.password)
+    if (!validatePassword) return res.status(400).json('Incorrect email or password')
+  
+    req.session.save(()=>{
+      req.session.logged_in = true;
+      req.session.user_id = findUserEmail.id
+      res.status(200).json('Successful login')
+    })
+    
+  } catch (err) {
+    res.status(500).json(err)
+  }
 }
 const logoutUser = async (req, res) => {
   if (req.session.logged_in) {
