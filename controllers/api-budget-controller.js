@@ -83,12 +83,16 @@ const updateBudget = async (req, res) => {
     },
     {
       where: {
-        name: req.body.name,
+        id: req.params.id,
         user_id: req.session.user_id || req.body.user_id
       },
     });
     if (!req.body.name || !req.body.amount) {
       res.status(400).json({ error: 'Must include name and amount' });
+      return;
+    }
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to update a budget' });
       return;
     }
     if (!updatedBudget) {
@@ -106,10 +110,14 @@ const deleteBudget = async (req, res) => {
   try {
     const deletedBudget = await Budgets.destroy({
       where: {
-        name: req.body.name,
+        id: req.params.id,
         user_id: req.session.user_id || req.body.user_id,
       },
     });
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to delete a budget' });
+      return;
+    }
     if (!deletedBudget) {
       res.status(404).json({ error: 'Budget not found' });
       return;
