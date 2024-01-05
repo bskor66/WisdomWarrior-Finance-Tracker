@@ -11,8 +11,9 @@ require('dotenv').config;
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();
-const PORT = process.env.port || 3001;
-const hbs = exphbs.create({ helpers: helpers, defaultLayout: 'main' });
+
+const PORT = process.env.PORT || 3001;
+const hbs = exphbs.create({ helpers });
 
 const sess = {
   secret: process.env.SESS_SECRET,
