@@ -34,9 +34,10 @@ const indexUser = async (req, res) => {
 };
 const postUser = async (req, res) => {
   try {
-    const { first_name: firstName, last_name: lastName, email: userEmail, password: userPassword } = req.body
+    const { firstName, lastName, userEmail, userPassword } = req.body;
+
     if (!(firstName && lastName && userEmail && userPassword)) {
-      return res.status(400).json('invalid entry')
+      return res.status(400).json({ message: 'All fields are required' });
     }
     const createNewUser = await User.create({
       first_name: firstName,
@@ -49,8 +50,21 @@ const postUser = async (req, res) => {
       req.session.user_id = createNewUser.id
       res.status(200).json(createNewUser)
     })
-  } catch (err) {
-    res.status(500).json(err)
+  } catch (error) {
+    if (
+      error.name === 'SequelizeValidationError' ||
+      error.name === 'ValidationError'
+    ) {
+      return res
+        .status(400)
+        .json({ message: 'Validation error', errors: error.errors });
+    }
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      return res.status(409).json({ message: 'User already exists' });
+    }
+    res
+      .status(500)
+      .json({ message: 'Internal Server Error', error: error.message });
   }
 };
 

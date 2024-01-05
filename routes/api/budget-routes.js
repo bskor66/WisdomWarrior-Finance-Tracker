@@ -6,6 +6,7 @@ const budgetController = require('../../controllers/api-budget-controller');
 router.get('/', budgetController.getAllBudgets);
 router.get('/:id', budgetController.getBudgetById);
 router.post('/', budgetController.createBudget);
-router.put('/', budgetController.updateBudget);
+router.put('/:id', budgetController.updateBudget);
+router.delete('/', budgetController.deleteBudget);
 
 module.exports = router;
