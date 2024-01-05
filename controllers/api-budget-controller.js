@@ -9,17 +9,16 @@ const getAllBudgets = async (req, res) => {
     const budgets = await Budgets.findAll({
       include: [User],
       attributes: {
-        exclude: ['user_id']
-      }
-    }
-    );
+        exclude: ['user_id'],
+      },
+    });
     res.json(budgets);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};
 
 module.exports = {
   getAllBudgets,
-}
+};
