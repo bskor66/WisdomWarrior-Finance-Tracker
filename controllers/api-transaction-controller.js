@@ -27,16 +27,19 @@ const getTransaction = async (req, res) => {
 };
 const postTransaction = async (req, res) => {
   try{
-    const { isExpense, transactionAmount, userId, budgetId} = req.body;
+    const { isExpense, transactionAmount,budgetId} = req.body;
 
     const newTransaction = await Transactions.create({
       is_expense: isExpense,
       transaction_amount: transactionAmount,
-      user_id: userId,
+      user_id: req.session.user_id,
       budget_id: budgetId,
     });
   } catch(error){
+    console.error('Error creating transaction:', error);
 
+    // Send an error response to the client
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 const deleteTransaction = async (req, res) => {
