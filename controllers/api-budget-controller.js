@@ -1,7 +1,4 @@
-// will require sequelize connection and models to perform logic
 const { Budgets, User } = require('../models/');
-// const Categories = require('../models/')
-// const User = require('../models/')
 const sequelize = require('../config/connection');
 
 const getAllBudgets = async (req, res) => {
@@ -25,7 +22,6 @@ const getAllBudgets = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 const getBudgetById = async (req, res) => {
   try {
     const budget = await Budgets.findByPk(req.params.id, {
@@ -51,7 +47,6 @@ const getBudgetById = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 const createBudget = async (req, res) => {
   try {
     const newBudget = await Budgets.create({
@@ -74,7 +69,6 @@ const createBudget = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 const updateBudget = async (req, res) => {
   try {
     const updatedBudget = await Budgets.update({
@@ -105,7 +99,6 @@ const updateBudget = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 const deleteBudget = async (req, res) => {
   try {
     const deletedBudget = await Budgets.destroy({
@@ -127,7 +120,7 @@ const deleteBudget = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};
 
 module.exports = {
   getAllBudgets,

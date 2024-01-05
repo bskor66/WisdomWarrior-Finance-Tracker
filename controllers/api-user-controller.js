@@ -1,4 +1,3 @@
-// const sequelize = require('../config/connection');
 const session = require('express-session');
 const { User, Budgets } = require('../models');
 
@@ -53,7 +52,7 @@ const postUser = async (req, res) => {
       email: userEmail,
       password: userPassword
     })
-    req.session.save(()=>{
+    req.session.save(() => {
       req.session.logged_in = true
       req.session.user_id = createNewUser.id
       res.status(200).json(createNewUser)
@@ -75,7 +74,6 @@ const postUser = async (req, res) => {
       .json({ message: 'Internal Server Error', error: error.message });
   }
 };
-
 const updateUser = async (req, res) => {
   try {
     const updateUser = await User.update(req.body, {
