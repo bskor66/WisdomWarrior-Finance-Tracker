@@ -7,7 +7,14 @@ const sequelize = require('../config/connection');
 const getAllBudgets = async (req, res) => {
   try {
     const budgets = await Budgets.findAll({
-      include: [User],
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude: ['password'],
+          }
+        }
+      ],
       attributes: {
         exclude: ['user_id'],
       },
@@ -19,6 +26,53 @@ const getAllBudgets = async (req, res) => {
   }
 };
 
+const getBudgetById = async (req, res) => {
+  try {
+    const budget = await Budgets.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude: ['password'],
+          }
+        }
+      ],
+      attributes: {
+        exclude: ['user_id'],
+      },
+    })
+    if (!budget) {
+      res.status(404).json({ error: 'Budget not found' });
+      return;
+    }
+    res.json(budget);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const createBudget = async (req, res) => {
+  try {
+    const newBudget = await Budgets.create({
+      id: req.body.id,
+      name: req.body.name,
+      amount: req.body.amount,
+      user_id: req.session.user_id,
+    });
+    if (!req.body.id || !req.body.name || !req.body.amount) {
+      res.status(400).json({ error: 'Must include id, name, and amount' });
+      return;
+    }
+    res.json(newBudget);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   getAllBudgets,
+  getBudgetById,
+  createBudget
 };
