@@ -155,6 +155,39 @@ const logoutUser = async (req, res) => {
     res.status(404).json('No user logged in').end();
   }
 };
+const postBudget = async (req, res) => {
+  try {
+    const newBudget = await Budgets.create({
+      name: req.body.name,
+      amount: req.body.amount,
+      user_id: req.params.id,
+    });
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to create a budget' });
+      return;
+    }
+
+    if (!req.body.name || !req.body.amount) {
+      res.status(400).json({ error: 'Must include id, name, and amount' });
+      return;
+    }
+    res.json(newBudget);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+const deleteBudget = async (req, res) => {
+  try {
+    const deleteBudget = await Budgets.destroy({
+      where: {
+        user_id: req.params.id,
+      },
+    });
+    res.status(200).json('Budgets deleted');
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
 
 module.exports = {
   indexAllUsers,
@@ -165,4 +198,6 @@ module.exports = {
   loginUser,
   logoutUser,
   indexBudgets,
+  postBudget,
+  deleteBudget,
 };

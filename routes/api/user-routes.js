@@ -15,11 +15,14 @@ router.get('/:id/budgets', userController.indexBudgets)
 router.post('/signup', userController.postUser)
 router.post('/login', userController.loginUser)
 router.post('/logout', userController.logoutUser)
+router.post('/:id/budgets', userController.postBudget)
 
 // update user by id
 router.put('/:id', userController.updateUser)
 // delete user by id
 router.delete('/:id', userController.deleteUser)
+// delete all budgets for a user
+router.delete('/:id/budgets', userController.deleteBudget)
 
 
 
