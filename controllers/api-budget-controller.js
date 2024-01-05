@@ -55,12 +55,16 @@ const getBudgetById = async (req, res) => {
 const createBudget = async (req, res) => {
   try {
     const newBudget = await Budgets.create({
-      id: req.body.id,
       name: req.body.name,
       amount: req.body.amount,
-      user_id: req.session.user_id,
+      user_id: req.session.user_id || req.body.user_id,
     });
-    if (!req.body.id || !req.body.name || !req.body.amount) {
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to create a budget' });
+      return;
+    }
+
+    if (!req.body.name || !req.body.amount) {
       res.status(400).json({ error: 'Must include id, name, and amount' });
       return;
     }
