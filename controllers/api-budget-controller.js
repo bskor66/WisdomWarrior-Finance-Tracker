@@ -75,8 +75,37 @@ const createBudget = async (req, res) => {
   }
 };
 
+const updateBudget = async (req, res) => {
+  try {
+    const updatedBudget = await Budgets.update({
+      name: req.body.name,
+      amount: req.body.amount,
+
+    },
+    {
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id || req.body.user_id
+      },
+    });
+    if (!req.body.name || !req.body.amount) {
+      res.status(400).json({ error: 'Must include name and amount' });
+      return;
+    }
+    if (!updatedBudget) {
+      res.status(404).json({ error: 'Budget not found' });
+      return;
+    }
+    res.json(updatedBudget);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
 module.exports = {
   getAllBudgets,
   getBudgetById,
-  createBudget
+  createBudget,
+  updateBudget
 };
