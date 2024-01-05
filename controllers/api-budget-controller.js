@@ -80,11 +80,10 @@ const updateBudget = async (req, res) => {
     const updatedBudget = await Budgets.update({
       name: req.body.name,
       amount: req.body.amount,
-
     },
     {
       where: {
-        id: req.params.id,
+        name: req.body.name,
         user_id: req.session.user_id || req.body.user_id
       },
     });
