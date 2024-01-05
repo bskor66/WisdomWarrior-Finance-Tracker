@@ -16,6 +16,10 @@ const getAllBudgets = async (req, res) => {
         exclude: ['user_id'],
       },
     });
+    if (!budgets) {
+      res.status(404).json({ error: 'No budgets found' });
+      return;
+    }
     res.json(budgets);
   } catch (error) {
     console.error(error);
