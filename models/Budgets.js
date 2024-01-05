@@ -18,13 +18,6 @@ Budgets.init(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    // categories_id: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'categories',
-    //     key: 'id',
-    //   },
-    // },
     user_id: {
       type: DataTypes.INTEGER,
       references: {

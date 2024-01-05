@@ -1,6 +1,6 @@
 // const sequelize = require('../config/connection');
 const session = require('express-session');
-const { User } = require('../models');
+const { User, Budgets } = require('../models');
 
 //* route: api/users/
 
@@ -20,6 +20,14 @@ const indexUser = async (req, res) => {
   try {
     const userId = req.params.id;
     const getOneUser = await User.findByPk(userId, {
+      include: [
+        {
+          model: Budgets,
+          attributes: {
+            exclude: ['user_id'],
+          },
+        },
+      ],
       attributes: {
         exclude: ['password'],
       },
