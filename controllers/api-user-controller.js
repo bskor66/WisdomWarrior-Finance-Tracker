@@ -39,6 +39,25 @@ const indexUser = async (req, res) => {
     res.status(500).json(err);
   }
 };
+const indexBudgets = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const getBudgets = await Budgets.findAll({
+      where: {
+        user_id: userId,
+      },
+      // attributes: {
+      //   exclude: ['user_id'],
+      // },
+    });
+    if (!getBudgets) {
+      return res.status(404).json('No budgets found for that user');
+    }
+    res.json(getBudgets);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 const postUser = async (req, res) => {
   try {
     const { firstName, lastName, userEmail, userPassword } = req.body;
@@ -145,4 +164,5 @@ module.exports = {
   deleteUser,
   loginUser,
   logoutUser,
+  indexBudgets,
 };
