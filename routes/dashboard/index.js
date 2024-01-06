@@ -27,7 +27,7 @@ router.get('/account', async (req, res) => {
 // Account Edit Page
 router.get('account/edit', async (req, res) => {
   try {
-    res.render('account-edit');
+    res.render('account-edit', {layout: 'dashboard',});
   } catch (err) {
     json.status(500).json(err);
   }
@@ -36,7 +36,7 @@ router.get('account/edit', async (req, res) => {
 // Budget Page
 router.get('/budget', async (req, res) => {
   try {
-    res.render('budget');
+    res.render('budget', {layout: 'dashboard',});
   } catch (err) {
     json.status(500).json(err);
   }
@@ -45,7 +45,7 @@ router.get('/budget', async (req, res) => {
 // Add Budget Page
 router.get('/budget/add', async (req, res) => {
   try {
-    res.render('budget-edit');
+    res.render('budget-edit', {layout: 'dashboard',});
   } catch (err) {
     json.status(500).json(err);
   }
@@ -54,7 +54,7 @@ router.get('/budget/add', async (req, res) => {
 // Transactions Page
 router.get('/transactions', async (req, res) => {
   try {
-    res.render('transactions');
+    res.render('transactions', {layout: 'dashboard',});
   } catch (err) {
     json.status(500).json(err);
   }
@@ -63,7 +63,7 @@ router.get('/transactions', async (req, res) => {
 // Transactions Add Page
 router.get('/transactions/add', async (req, res) => {
   try {
-    res.render('transactions-add');
+    res.render('transactions-add', {layout: 'dashboard',});
   } catch (err) {
     json.status(500).json(err);
   }
