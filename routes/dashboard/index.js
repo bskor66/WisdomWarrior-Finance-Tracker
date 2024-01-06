@@ -49,7 +49,7 @@ router.get('account/edit', async (req, res) => {
 });
 
 // Budget Page
-router.get('/budget', async (req, res) => {
+router.get('/budgets', async (req, res) => {
   try {
     res.render('budget', {layout: 'dashboard',});
   } catch (err) {
