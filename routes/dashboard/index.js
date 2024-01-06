@@ -1,26 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const { User, Budgets, Transactions } = require('../../models');
+const dashboardController = require('../../controllers/dashboard-controller');
 // const checkAuth = require('../../utils/checkAuth');
+
 
 // Homepage
 router.get('/', async (req, res) => {
   try {
-    const budgets = await Budgets.findAll({
-      where: {
-        user_id: req.session.user_id,
-      }
-    });
-    const budgetsData = budgets.map((budget) => budget.get({ plain: true }));
+    const budgets = dashboardController.userBudgets
+    const transactions = dashboardController.userTransactions
 
-    const transactions = await Transactions.findAll({
-      where: {
-        user_id: req.session.user_id,
-      }
-    });
-    const transactionsData = transactions.map((transaction) => transaction.get({ plain: true }));
-
-    res.render('dash-landing', { layout: 'dashboard', budgetsData, transactionsData });
+    res.render('dash-landing', { layout: 'dashboard', budgets, transactions });
   } catch (err) {
     json.status(500).json(err);
   }
@@ -51,7 +42,9 @@ router.get('account/edit', async (req, res) => {
 // Budget Page
 router.get('/budgets', async (req, res) => {
   try {
-    res.render('budget', {layout: 'dashboard',});
+    const budgets = dashboardController.userBudgets
+
+    res.render('budgets', {layout: 'dashboard', budgets});
   } catch (err) {
     json.status(500).json(err);
   }
@@ -60,7 +53,9 @@ router.get('/budgets', async (req, res) => {
 // budget by id
 router.get('budget/:id', async (req, res) => {
   try {
-    res.render('budget', {layout: 'dashboard',});
+    const budgets = dashboardController.userBudgetsById
+
+    res.render('budget', {layout: 'dashboard', budgets});
   } catch (err) {
     json.status(500).json(err);
   }
@@ -78,7 +73,9 @@ router.get('/budget/add', async (req, res) => {
 // Transactions Page
 router.get('/transactions', async (req, res) => {
   try {
-    res.render('transactions', {layout: 'dashboard',});
+    const transactions = dashboardController.userTransactions
+    
+    res.render('transactions', {layout: 'dashboard', transactions});
   } catch (err) {
     json.status(500).json(err);
   }
@@ -87,7 +84,9 @@ router.get('/transactions', async (req, res) => {
 // transactions by id
 router.get('/transactions/:id', async (req, res) => {
   try {
-    res.render('transactions', {layout: 'dashboard',});
+    const transactions = dashboardController.userTransactionsById
+
+    res.render('transactions', {layout: 'dashboard', transactions});
   } catch (err) {
     json.status(500).json(err);
   }
