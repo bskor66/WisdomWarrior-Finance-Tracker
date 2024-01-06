@@ -1,11 +1,26 @@
 const express = require('express');
 const router = express.Router();
+const { User, Budgets, Transactions } = require('../../models');
 // const checkAuth = require('../../utils/checkAuth');
 
 // Homepage
 router.get('/', async (req, res) => {
   try {
-    res.render('dash-landing', { layout: 'dashboard' });
+    const budgets = await Budgets.findAll({
+      where: {
+        user_id: req.session.user_id,
+      }
+    });
+    const budgetsData = budgets.map((budget) => budget.get({ plain: true }));
+
+    const transactions = await Transactions.findAll({
+      where: {
+        user_id: req.session.user_id,
+      }
+    });
+    const transactionsData = transactions.map((transaction) => transaction.get({ plain: true }));
+
+    res.render('dash-landing', { layout: 'dashboard', budgetsData, transactionsData });
   } catch (err) {
     json.status(500).json(err);
   }
