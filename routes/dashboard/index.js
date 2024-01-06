@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+// const checkAuth = require('../../utils/checkAuth');
 
 // Homepage
 router.get('/', async (req, res) => {
@@ -13,7 +14,11 @@ router.get('/', async (req, res) => {
 // Account Page
 router.get('/account', async (req, res) => {
   try {
-    res.render('account');
+    const getUser = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      // include: [{ model: Budget }],
+    });
+    res.render('account', {layout: 'dashboard',});
   } catch (err) {
     json.status(500).json(err);
   }

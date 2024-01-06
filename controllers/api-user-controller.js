@@ -124,6 +124,11 @@ const loginUser = async (req, res) => {
       return;
     }
 
+    if (req.session.logged_in) {
+      res.status(400).json('User already logged in');
+      return;
+    }
+
     const findUserEmail = await User.findOne({
       where: {
         email: req.body.email,
@@ -148,6 +153,7 @@ const loginUser = async (req, res) => {
 };
 const logoutUser = async (req, res) => {
   if (req.session.logged_in) {
+    req.session.logged_in = false;
     req.session.destroy(() => {
       res.status(204).json('Logged out').end();
     });
