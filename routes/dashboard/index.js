@@ -42,6 +42,15 @@ router.get('/budget', async (req, res) => {
   }
 });
 
+// budget by id
+router.get('budget/:id', async (req, res) => {
+  try {
+    res.render('budget', {layout: 'dashboard',});
+  } catch (err) {
+    json.status(500).json(err);
+  }
+});
+
 // Add Budget Page
 router.get('/budget/add', async (req, res) => {
   try {
@@ -53,6 +62,15 @@ router.get('/budget/add', async (req, res) => {
 
 // Transactions Page
 router.get('/transactions', async (req, res) => {
+  try {
+    res.render('transactions', {layout: 'dashboard',});
+  } catch (err) {
+    json.status(500).json(err);
+  }
+});
+
+// transactions by id
+router.get('/transactions/:id', async (req, res) => {
   try {
     res.render('transactions', {layout: 'dashboard',});
   } catch (err) {
