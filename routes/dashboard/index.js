@@ -49,7 +49,7 @@ router.get('/budgets', async (req, res) => {
 });
 
 // budget by id
-router.get('budget/:id', async (req, res) => {
+router.get('budgets/:id', async (req, res) => {
   try {
     const budgets = dashboardController.userBudgetsById
 
@@ -60,7 +60,7 @@ router.get('budget/:id', async (req, res) => {
 });
 
 // Add Budget Page
-router.get('/budget/add', async (req, res) => {
+router.get('/budgets/add', async (req, res) => {
   try {
     res.render('budget-edit', {layout: 'dashboard',});
   } catch (err) {
