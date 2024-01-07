@@ -20,11 +20,9 @@ router.get('/', async (req, res) => {
 // Account Page
 router.get('/account', async (req, res) => {
   try {
-    const getUser = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      // include: [{ model: Budget }],
-    });
-    res.render('account', {layout: 'dashboard',});
+    const userData = dashboardController.userData
+
+    res.render('account', {layout: 'dashboard', userData});
   } catch (err) {
     json.status(500).json(err);
   }

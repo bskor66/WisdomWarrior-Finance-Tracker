@@ -1,5 +1,38 @@
 const { User, Budgets, Transactions } = require('../models');
 
+// Queries user data - excludes password - includes budgets and transactions
+const userData = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.session.user_id, {
+      attributes: {
+        exclude: ['password'],
+      },
+      include: [
+        {
+          model: Budgets,
+          attributes: {
+            exclude: ['user_id'],
+          },
+        },
+        {
+          model: Transactions,
+          attributes: {
+            exclude: ['user_id'],
+          },
+        },
+      ],
+    });
+    const userData = user.map((user) => user.get({ plain: true }))
+    
+    if (!userData) {
+      return res.status(404).json('No user found with that ID');
+    }
+    return userData;
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 // Queries user budgets
 const userBudgets = async (req, res) => {
   const budgets = await Budgets.findAll({
@@ -50,5 +83,6 @@ module.exports = {
   userBudgets,
   userTransactions,
   userBudgetsById,
-  userTransactionsById
+  userTransactionsById,
+  userData,
 }
