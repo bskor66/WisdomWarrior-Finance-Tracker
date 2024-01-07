@@ -1,4 +1,5 @@
 const session = require('express-session');
+const bcrypt = require('bcrypt');
 const { User, Budgets } = require('../models');
 
 //* route: api/users/
@@ -7,7 +8,7 @@ const indexAllUsers = async (req, res) => {
   try {
     const allUsers = await User.findAll({
       attributes: {
-        exclude: ['password'],
+        // exclude: ['password'],
       },
     });
     res.status(200).json(allUsers);
@@ -95,14 +96,60 @@ const postUser = async (req, res) => {
 };
 const updateUser = async (req, res) => {
   try {
-    const updateUser = await User.update(req.body, {
+    // * pass in current password, new password, and email
+    const { currentPassword, newPassword, email } = req.body;
+    if (!currentPassword ) {
+      res.status(400).json('Please enter your current password');
+      return;
+    };
+    if (!newPassword) {
+      res.status(400).json('Please enter a new password');
+      return;
+    }
+    if (!req.session.logged_in) {
+      res.status(400).json('No user logged in');
+      return;
+    };
+    if (currentPassword === newPassword) {
+      res.status(400).json('New password cannot be the same as old password');
+      return;
+    }
+    if (newPassword.length < 8) {
+      res.status(400).json('Password must be at least 8 characters');
+      return;
+    };
+    // check the provided password against the database
+    const userData = await User.findOne({
+      where: {
+        id: req.session.user_id,
+      },
+    });
+    if (!userData) {
+      res.status(400).json('No user logged in');
+      return;
+    }
+
+    const valid = await userData.checkPassword(currentPassword);
+    if (!valid) {
+      res.status(400).json('Incorrect password');
+      return;
+    };
+    const updateUser = await User.update({
+      email: email,
+      password: await bcrypt.hash(newPassword, 10)
+    }, {
       where: {
         id: req.params.id,
       },
     });
+    if (!updateUser) {
+      res.status(400).json('No user found with that ID');
+      return;
+    }
     res.status(204).json('User updated');
   } catch (err) {
-    res.status(500).json(err);
+    console.log(err);
+    res.status(500);
   }
 };
 const deleteUser = async (req, res) => {
@@ -155,7 +202,7 @@ const logoutUser = async (req, res) => {
   if (req.session.logged_in) {
     req.session.logged_in = false;
     req.session.destroy(() => {
-      res.status(204).json('Logged out').end();
+      res.json('User logged out').end();
     });
   } else {
     res.status(404).json('No user logged in').end();

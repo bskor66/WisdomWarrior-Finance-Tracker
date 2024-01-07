@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User, Budgets, Transactions } = require('../../models');
+const { User } = require('../../models');
 const dashboardController = require('../../controllers/dashboard-controller');
 // const checkAuth = require('../../utils/checkAuth');
 
