@@ -4,8 +4,8 @@ const transactionController = require('../../controllers/api-transaction-control
 
 router.get('/', transactionController.getAllTransactions);
 router.get('/:id', transactionController.getTransaction);
-router.get('/', transactionController.createTransaction);
-router.get('/:id', transactionController.updateTransaction);
-router.get('/:id', transactionController.deleteTransaction);
+router.post('/', transactionController.createTransaction);
+router.put('/:id', transactionController.updateTransaction);
+router.delete('/:id', transactionController.deleteTransaction);
 
 module.exports = router;
