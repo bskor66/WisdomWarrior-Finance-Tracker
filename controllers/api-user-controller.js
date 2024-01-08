@@ -1,5 +1,5 @@
 const session = require('express-session');
-const { User, Budgets } = require('../models');
+const { User, Budgets, Transactions } = require('../models');
 
 //* route: api/users/
 
@@ -54,6 +54,22 @@ const indexBudgets = async (req, res) => {
       return res.status(404).json('No budgets found for that user');
     }
     res.json(getBudgets);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+const indexTransactions = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const getTransactions = await Transactions.findAll({
+      where: {
+        user_id: userId,
+      },
+    });
+    if (!getBudgets) {
+      return res.status(404).json('No Transactions found for that user');
+    }
+    res.json(getTransactions);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -176,9 +192,43 @@ const postBudget = async (req, res) => {
     res.status(500).json(err);
   }
 };
+const postTransaction = async (req, res) => {
+  try {
+    const newTransaction = await Transactions.create({
+      is_expense: req.body.is_expense,
+      transaction_amount: req.body.transaction_amount,
+      user_id: req.params.id,
+      budget_id: req.body.budget_id,
+    });
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to create a Transation' });
+      return;
+    }
+
+    if (!req.body.name || !req.body.amount) {
+      res.status(400).json({ error: 'Must include Id, type, Amount and what budget its apart of.' });
+      return;
+    }
+    res.json(newTransaction);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 const deleteBudget = async (req, res) => {
   try {
     const deleteBudget = await Budgets.destroy({
+      where: {
+        user_id: req.params.id,
+      },
+    });
+    res.status(200).json('Budgets deleted');
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+const deleteTransaction = async (req, res) => {
+  try {
+    const deleteTransaction = await Transactions.destroy({
       where: {
         user_id: req.params.id,
       },
@@ -198,6 +248,9 @@ module.exports = {
   loginUser,
   logoutUser,
   indexBudgets,
+  indexTransactions,
   postBudget,
+  postTransaction,
   deleteBudget,
+  deleteTransaction,
 };
