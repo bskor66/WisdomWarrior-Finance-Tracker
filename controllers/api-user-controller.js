@@ -66,7 +66,7 @@ const indexTransactions = async (req, res) => {
         user_id: userId,
       },
     });
-    if (!getBudgets) {
+    if (!getTransactions) {
       return res.status(404).json('No Transactions found for that user');
     }
     res.json(getTransactions);
@@ -197,7 +197,7 @@ const postTransaction = async (req, res) => {
     const newTransaction = await Transactions.create({
       is_expense: req.body.is_expense,
       transaction_amount: req.body.transaction_amount,
-      user_id: req.params.id,
+      user_id: req.params.user_id||req.body.user_id,
       budget_id: req.body.budget_id,
     });
     if (!req.session.user_id && !req.body.user_id) {
@@ -233,7 +233,7 @@ const deleteTransaction = async (req, res) => {
         user_id: req.params.id,
       },
     });
-    res.status(200).json('Budgets deleted');
+    res.status(200).json('Transactions deleted');
   } catch (err) {
     res.status(500).json(err);
   }
