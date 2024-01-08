@@ -1,6 +1,7 @@
 // will require sequelize connection and models to perform logic
 const { Transactions, User, Budgets } = require('../models');
 const sequelize = require('../config/connection');
+const { update } = require('../models/User');
 
 const getAllTransactions = async (req, res) => {
   try {
@@ -25,7 +26,7 @@ const getTransaction = async (req, res) => {
     res.status(500).json(err);
   }
 };
-const postTransaction = async (req, res) => {
+const createTransaction = async (req, res) => {
   try{
     const { isExpense, transactionAmount,budgetId} = req.body;
 
@@ -35,6 +36,15 @@ const postTransaction = async (req, res) => {
       user_id: req.session.user_id,
       budget_id: budgetId,
     });
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to create a Transation' });
+      return;
+    }
+    if (!req.body.name || !req.body.amount) {
+      res.status(400).json({ error: 'Must include Id, Amount, type and what budget its apart of.' });
+      return;
+    }
+    res.json(newTransaction);
   } catch(error){
     console.error('Error creating transaction:', error);
 
@@ -54,6 +64,38 @@ const deleteTransaction = async (req, res) => {
     res.status(500).json(err);
   }
 };
+const updateTransaction = async (req, res) => {
+try {
+const updatedTransaction = await Transactions.update({
+  transaction_amount: req.body.transaction_amount,
+  },
+  {
+    where:{
+      id: req.params.id,
+      user_id: req.session.user_id || req.body.user_id
+    },
+  });
+  if (!req.body.name || !req.body.transaction_amount) {
+    res.status(400).json({ error: 'Must include amount' });
+    return;
+  }
+  if (!req.session.user_id && !req.body.user_id) {
+    res.status(400).json({ error: 'Must be logged in to update a transaction' });
+    return;
+  }
+  if (!updatedTransaction) {
+    res.status(404).json({ error: 'Transaction not found' });
+    return;
+  }
+  res.json(updatedTransaction);
+} catch {
+
+}
+};
 module.exports = {
   getAllTransactions,
+  getTransaction,
+  createTransaction,
+  deleteTransaction,
+  updateTransaction
 };
