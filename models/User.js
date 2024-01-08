@@ -39,10 +39,6 @@ User.init(
         len: [8],
       },
     },
-    // is_Strict: {
-    //   type: DataTypes.BOOLEAN,
-    //   allowNull: false,
-    // },
   },
   {
     hooks: {

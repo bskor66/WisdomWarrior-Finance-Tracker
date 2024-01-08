@@ -32,7 +32,7 @@ Budgets.hasMany(Transactions, {
   foreignKey: 'budget_id',
   onDelete: 'SET NULL'
 })
-Transactions.belongsTo(Budgets,{
+Transactions.belongsTo(Budgets, {
   foreignKey: 'budget_id'
 })
 

@@ -38,13 +38,6 @@ Transactions.init(
         key: 'id'
       }
      }
-    // category_id: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'categories',
-    //     key: 'id',
-    //   },
-    // },
   },
   {
     sequelize,
