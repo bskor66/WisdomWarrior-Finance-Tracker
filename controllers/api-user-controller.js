@@ -1,6 +1,5 @@
-// const sequelize = require('../config/connection');
 const session = require('express-session');
-const { User } = require('../models');
+const { User, Budgets } = require('../models');
 
 //* route: api/users/
 
@@ -20,6 +19,14 @@ const indexUser = async (req, res) => {
   try {
     const userId = req.params.id;
     const getOneUser = await User.findByPk(userId, {
+      include: [
+        {
+          model: Budgets,
+          attributes: {
+            exclude: ['user_id'],
+          },
+        },
+      ],
       attributes: {
         exclude: ['password'],
       },
@@ -32,6 +39,25 @@ const indexUser = async (req, res) => {
     res.status(500).json(err);
   }
 };
+const indexBudgets = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const getBudgets = await Budgets.findAll({
+      where: {
+        user_id: userId,
+      },
+      // attributes: {
+      //   exclude: ['user_id'],
+      // },
+    });
+    if (!getBudgets) {
+      return res.status(404).json('No budgets found for that user');
+    }
+    res.json(getBudgets);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 const postUser = async (req, res) => {
   try {
     const { firstName, lastName, userEmail, userPassword } = req.body;
@@ -39,19 +65,17 @@ const postUser = async (req, res) => {
     if (!(firstName && lastName && userEmail && userPassword)) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-
-    const newUser = await User.create({
+    const createNewUser = await User.create({
       first_name: firstName,
       last_name: lastName,
       email: userEmail,
-      password: userPassword,
-    });
-
+      password: userPassword
+    })
     req.session.save(() => {
-      req.session.logged_in = true;
-      req.session.user_id = newUser.id;
-      res.status(201).json(newUser);
-    });
+      req.session.logged_in = true
+      req.session.user_id = createNewUser.id
+      res.status(200).json(createNewUser)
+    })
   } catch (error) {
     if (
       error.name === 'SequelizeValidationError' ||
@@ -69,7 +93,6 @@ const postUser = async (req, res) => {
       .json({ message: 'Internal Server Error', error: error.message });
   }
 };
-
 const updateUser = async (req, res) => {
   try {
     const updateUser = await User.update(req.body, {
@@ -132,6 +155,39 @@ const logoutUser = async (req, res) => {
     res.status(404).json('No user logged in').end();
   }
 };
+const postBudget = async (req, res) => {
+  try {
+    const newBudget = await Budgets.create({
+      name: req.body.name,
+      amount: req.body.amount,
+      user_id: req.params.id,
+    });
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to create a budget' });
+      return;
+    }
+
+    if (!req.body.name || !req.body.amount) {
+      res.status(400).json({ error: 'Must include id, name, and amount' });
+      return;
+    }
+    res.json(newBudget);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+const deleteBudget = async (req, res) => {
+  try {
+    const deleteBudget = await Budgets.destroy({
+      where: {
+        user_id: req.params.id,
+      },
+    });
+    res.status(200).json('Budgets deleted');
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
 
 module.exports = {
   indexAllUsers,
@@ -141,4 +197,7 @@ module.exports = {
   deleteUser,
   loginUser,
   logoutUser,
+  indexBudgets,
+  postBudget,
+  deleteBudget,
 };
