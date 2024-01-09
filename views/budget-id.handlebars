@@ -24,9 +24,10 @@
       <div class=" bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm ">
         <div class="flex flex-col space-y-1.5 p-6">
           <h3
+
             class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center transition ease-in-out">
             Remaining</h3>
-          <p class="text-sm text-white text-muted-foreground text-center">$<span id="dollarAmountRemaining"></span></p>
+          <p  class="text-sm text-white text-muted-foreground text-center">$<span data-remaining="{{budgetData.amount}}" id="dollarAmountRemaining"></span></p>
         </div>
         <div class="flex justify-center mt-4 gap-2">
         </div>
@@ -76,7 +77,7 @@
                       Edit
                     </button>
                     <button
-                      class="max-w-24 text-white inline-flex bg-gray-900 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                      data-id="{{id}}" class=" delete-transaction max-w-24 text-white inline-flex bg-gray-900 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
                       Delete
                     </button>
                   </div>
