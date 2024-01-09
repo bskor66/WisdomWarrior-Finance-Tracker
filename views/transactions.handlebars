@@ -1,0 +1,40 @@
+{{!< layouts/dashboard}}
+    <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
+        <div>
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                <div class="relative w-full overflow-auto">
+                    <table class="w-full caption-bottom text-sm">
+                        <thead class="[&_tr]:border-b">
+                            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                <th
+                                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 w-[100px]">
+                                    Date
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                                    Description
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                                    Amount
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                                    Category
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="[&_tr:last-child]:border-0">
+                            {{#each Transactions}}
+                            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium">{{date}}</td>
+                                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">{{budgetType}}</td>
+                                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">{{transactionAmount}}</td>
+                                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">{{isExpense}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
