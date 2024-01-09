@@ -1,0 +1,27 @@
+{{!< layouts/dashboard}} 
+
+<main class="flex flex-col p-6 bg-gray-100 min-h-screen mb-0 bg-gray-700">
+  <header class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-white  ">Budgets</h1>
+    <button id="back-to-budgets"
+      class="bg-blue-500 text-white inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2">
+      Back
+    </button>
+  </header>
+
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+      <div class=" bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm ">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 data-id="{{budgetData.id}}"
+            class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center hover:cursor-pointer hover:scale-125 transition ease-in-out">
+            {{budgetData.name}}</h3>
+          <p class="text-sm text-white text-muted-foreground text-center">Allocated: ${{budgetData.amount}}</p>
+        </div>
+        <div class="flex justify-center mt-4 gap-2">
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+  <script src="/js/budgets/budget-id/js"></script>

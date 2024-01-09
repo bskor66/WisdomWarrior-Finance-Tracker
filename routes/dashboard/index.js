@@ -57,18 +57,28 @@ router.get('/budgets', async (req, res) => {
 });
 
 // budget by id
-router.get('budgets/:id', async (req, res) => {
+router.get('/budgets/:id', async (req, res) => {
   try {
     // const budgets = dashboardController.userBudgetsById
     const budget = await Budgets.findByPk(req.params.id, {
       where: {
-        user_id: req.session.user_id,
+        // user_id: req.session.user_id,
         id: req.params.id,
       }
     });
     const budgetData = budget.get({ plain: true });
+    console.log(budgetData);  
 
-    res.render('budget', { layout: 'dashboard', budgetData });
+    const transactions = await Transactions.findAll({
+      where: {
+        user_id: req.session.user_id,
+        budget_id: req.params.id,
+      }
+    });
+    const transactionsData = transactions.map((transaction) => transaction.get({ plain: true }));
+    console.log(transactionsData);
+
+    res.render('budget-id', { layout: 'dashboard', budgetData, transactionsData });
   } catch (err) {
     json.status(500).json(err);
   }
