@@ -57,6 +57,14 @@ router.get('/budgets', async (req, res) => {
 });
 
 // budget by id
+router.get('/budgets/add', async (req, res) => {
+  try {
+    res.render('budget-add', { layout: 'dashboard', });
+  } catch (err) {
+    json.status(500).json(err);
+  }
+});
+
 router.get('/budgets/:id', async (req, res) => {
   try {
     // const budgets = dashboardController.userBudgetsById
@@ -80,18 +88,11 @@ router.get('/budgets/:id', async (req, res) => {
 
     res.render('budget-id', { layout: 'dashboard', budgetData, transactionsData });
   } catch (err) {
-    json.status(500).json(err);
+    res.status(500)
   }
 });
 
 // Add Budget Page
-router.get('/budgets/add', async (req, res) => {
-  try {
-    res.render('budget-add', { layout: 'dashboard', });
-  } catch (err) {
-    json.status(500).json(err);
-  }
-});
 
 // Transactions Page
 router.get('/transactions', async (req, res) => {
