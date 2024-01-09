@@ -1,87 +1,88 @@
-{{!< layouts/dashboard}} <main class="flex flex-col p-6 bg-gray-100 min-h-screen">
+{{!< layouts/dashboard}} 
+
+<main class="flex flex-col p-6 bg-gray-100 min-h-screen mb-0 bg-gray-700">
   <header class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-900">Budgets</h1>
+    <h1 class="text-2xl font-bold text-white  ">Budgets</h1>
     <button
-      class="add-budget inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2">
+      class="add-budget bg-blue-500 text-white inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2">
       Add Budget
     </button>
   </header>
 
-
-  {{#unless budgetData.length}}
   <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-      <div class="flex flex-col space-y-1.5 p-6">
-        <h3 class="text-2xl font-semibold leading-none tracking-tight text-center">No Budgets</h3>
-        <p class="text-sm text-muted-foreground text-center">You have not created any budgets yet.</p>
+  <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+    {{#unless budgetData.length}}
+      <div class="bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight text-center text-white">No Budgets</h3>
+          <p class="text-sm text-muted-foreground text-center text-white">You have not created any budgets yet.</p>
+        </div>
+        <div class="flex justify-center mt-4">
+          <button
+            class="add-budget text-white inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
+            Add Budget
+          </button>
+        </div>
       </div>
-      <div class="flex justify-center mt-4">
-        <button
-          class="add-budget inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
-          Add Budget
+    </section>
+    {{/unless}}
+    {{#each budgetData}}
+    <div class=" bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm ">
+      <div class="flex flex-col space-y-1.5 p-6">
+        <h3 data-id="{{id}}"
+          class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center hover:cursor-pointer hover:scale-125 transition ease-in-out">
+          {{name}}</h3>
+        <p class="text-sm text-white text-muted-foreground text-center">Allocated: ${{amount}}</p>
+      </div>
+      <div class="flex justify-center mt-4 gap-2 mb-4">
+        <button data-id="{{id}}"
+          class="edit-budget bg-blue-500 text-white inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
+          Edit
+        </button>
+        <button data-id="{{id}}"
+          class="delete-budget bg-red-500 text-white inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
+          Delete
         </button>
       </div>
     </div>
-  </section>
-  {{/unless}}
-  {{#each budgetData}}
-  <section  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-      <div  class="  rounded-lg border bg-card text-card-foreground shadow-sm ">
-        <div class="flex flex-col space-y-1.5 p-6">
-          <h3 data-id="{{id}}" class="budget-name text-2xl font-semibold leading-none tracking-tight text-center hover:cursor-pointer hover:scale-125 transition ease-in-out">{{name}}</h3>
-          <p class="text-sm text-muted-foreground text-center">Allocated: ${{amount}}</p>
+  </div>
+  <dialog id="editBudgetModal" class="modal p-6 rounded-lg">
+    <div class="modal-box">
+      <form class="space-y-4">
+        <div class="space-y-2">
+          <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="budget-name">
+            Budget Name
+          </label>
+          <input
+            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            id="budget-name" placeholder="Enter budget name" />
         </div>
-        <div class="flex justify-center mt-4">
-          <button data-id="{{id}}"
-            class="edit-budget inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
-            Edit
+        <div class="space-y-2">
+          <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="budget-amount">
+            Budget Amount
+          </label>
+          <input
+            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            id="budget-amount" placeholder="Enter budget amount" type="number" />
+        </div>
+        <div class="flex space-x-4">
+          <button id="saveChangesBtn" data-id="{{id}}"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+            type="submit">
+            Save Changes
           </button>
-          <button data-id="{{id}}"
-            class="delete-budget inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
-            Delete
+          <button id="cancelChangesBtn" onclick="editBudgetModal.close()"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 w-full bg-red-500 text-white"
+            type="button">
+            Cancel
           </button>
         </div>
-      </div>
+      </form>
     </div>
-
-    <dialog id="editBudgetModal" class="modal p-6 rounded-lg">
-      <div class="modal-box">
-        <form class="space-y-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              for="budget-name">
-              Budget Name
-            </label>
-            <input
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              id="budget-name" placeholder="Enter budget name" />
-          </div>
-          <div class="space-y-2">
-            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              for="budget-amount">
-              Budget Amount
-            </label>
-            <input
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              id="budget-amount" placeholder="Enter budget amount" type="number" />
-          </div>
-          <div class="flex space-x-4">
-            <button id="saveChangesBtn" data-id="{{id}}"
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
-              type="submit">
-              Save Changes
-            </button>
-            <button id="cancelChangesBtn" onclick="editBudgetModal.close()"
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 w-full bg-red-500 text-white"
-              type="button">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </dialog>
-    {{/each}}
+  </dialog>
+  {{/each}}
   </section>
-  </main>
-  <script src="/js/budgets/budgets.js"></script>
+</main>
+<script src="/js/budgets/budgets.js"></script>
