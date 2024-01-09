@@ -1,0 +1,34 @@
+{{!< layouts/dashboard}} <!-- // v0 by Vercel. // https://v0.dev/t/P7m833s57P3 -->
+
+  <main class="flex flex-col p-6 bg-gray-100 min-h-screen">
+    <header class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">Budgets</h1>
+      <button id="add-budget"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2">
+        Add Budget
+      </button>
+    </header>
+
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      {{#each budgetData}}
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight text-center">{{name}}</h3>
+          <p class="text-sm text-muted-foreground text-center">Allocated: ${{amount}}</p>
+        </div>
+        <div class="flex justify-center mt-4">
+          <button id="edit-budget"
+            class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
+            Edit
+          </button>
+          <button data-id="{{id}}"
+            class="delete-budget inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
+            Delete
+          </button>
+        </div>
+      </div>
+      </div>
+      {{/each}}
+    </section>
+  </main>
+  <script src="/js/budgets/budgets.js"></script>

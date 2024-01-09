@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { User } = require('../../models');
+const { User, Budgets, Transactions } = require('../../models');
 const dashboardController = require('../../controllers/dashboard-controller');
 // const checkAuth = require('../../utils/checkAuth');
+const session = require('express-session');
 
 
 // Homepage
@@ -22,7 +23,7 @@ router.get('/account', async (req, res) => {
   try {
     const userData = dashboardController.userData
 
-    res.render('account', {layout: 'dashboard', userData});
+    res.render('account', { layout: 'dashboard', userData });
   } catch (err) {
     json.status(500).json(err);
   }
@@ -31,7 +32,7 @@ router.get('/account', async (req, res) => {
 // Account Edit Page
 router.get('account/edit', async (req, res) => {
   try {
-    res.render('account-edit', {layout: 'dashboard',});
+    res.render('account-edit', { layout: 'dashboard', });
   } catch (err) {
     json.status(500).json(err);
   }
@@ -40,9 +41,16 @@ router.get('account/edit', async (req, res) => {
 // Budget Page
 router.get('/budgets', async (req, res) => {
   try {
-    const budgets = dashboardController.userBudgets
+    // const budgets = dashboardController.userBudgets
+    const budget = await Budgets.findAll({
+      where: {
+        user_id: req.session.user_id,
+      }
+    });
+    
+    const budgetData = budget.map((budget) => budget.get({ plain: true }));
 
-    res.render('budgets', {layout: 'dashboard', budgets});
+    res.render('budgets', { layout: 'dashboard', budgetData });
   } catch (err) {
     json.status(500).json(err);
   }
@@ -51,9 +59,16 @@ router.get('/budgets', async (req, res) => {
 // budget by id
 router.get('budgets/:id', async (req, res) => {
   try {
-    const budgets = dashboardController.userBudgetsById
+    // const budgets = dashboardController.userBudgetsById
+    const budget = await Budgets.findByPk(req.params.id, {
+      where: {
+        user_id: req.session.user_id,
+        id: req.params.id,
+      }
+    });
+    const budgetData = budget.get({ plain: true });
 
-    res.render('budget', {layout: 'dashboard', budgets});
+    res.render('budget', { layout: 'dashboard', budgetData });
   } catch (err) {
     json.status(500).json(err);
   }
@@ -62,7 +77,7 @@ router.get('budgets/:id', async (req, res) => {
 // Add Budget Page
 router.get('/budgets/add', async (req, res) => {
   try {
-    res.render('budget-edit', {layout: 'dashboard',});
+    res.render('budget-add', { layout: 'dashboard', });
   } catch (err) {
     json.status(500).json(err);
   }
@@ -72,8 +87,8 @@ router.get('/budgets/add', async (req, res) => {
 router.get('/transactions', async (req, res) => {
   try {
     const transactions = dashboardController.userTransactions
-    
-    res.render('transactions', {layout: 'dashboard', transactions});
+
+    res.render('transactions', { layout: 'dashboard', transactions });
   } catch (err) {
     json.status(500).json(err);
   }
@@ -84,7 +99,7 @@ router.get('/transactions/:id', async (req, res) => {
   try {
     const transactions = dashboardController.userTransactionsById
 
-    res.render('transactions', {layout: 'dashboard', transactions});
+    res.render('transactions', { layout: 'dashboard', transactions });
   } catch (err) {
     json.status(500).json(err);
   }
@@ -93,7 +108,7 @@ router.get('/transactions/:id', async (req, res) => {
 // Transactions Add Page
 router.get('/transactions/add', async (req, res) => {
   try {
-    res.render('transactions-add', {layout: 'dashboard',});
+    res.render('transactions-add', { layout: 'dashboard', });
   } catch (err) {
     json.status(500).json(err);
   }
