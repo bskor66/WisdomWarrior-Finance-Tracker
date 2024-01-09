@@ -1,5 +1,5 @@
 const { User, Budgets, Transactions } = require('../models');
-const session = require('express-session');
+
 
 // Queries user data - excludes password - includes budgets and transactions
 const userData = async (req, res) => {
