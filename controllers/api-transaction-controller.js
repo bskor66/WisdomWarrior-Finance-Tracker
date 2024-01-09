@@ -6,7 +6,7 @@ const { update } = require('../models/User');
 const getAllTransactions = async (req, res) => {
   try {
     const transactions = await Transactions.findAll({
-      include: [User, Budgets],
+      include: [Budgets],
     });
     res.json(transactions);
   } catch (error) {
@@ -66,16 +66,7 @@ const deleteTransaction = async (req, res) => {
 };
 const updateTransaction = async (req, res) => {
   try {
-    const updatedTransaction = await Transactions.update({
-      transaction_amount: req.body.transaction_amount,
-    },
-      {
-        where: {
-          id: req.params.id,
-          user_id: req.session.user_id || req.body.user_id
-        },
-      });
-    if (!req.body.name || !req.body.transaction_amount) {
+    if (!req.body.transaction_amount) {
       res.status(400).json({ error: 'Must include amount' });
       return;
     }
@@ -83,6 +74,15 @@ const updateTransaction = async (req, res) => {
       res.status(400).json({ error: 'Must be logged in to update a transaction' });
       return;
     }
+    const updatedTransaction = await Transactions.update({
+      transaction_amount: req.body.transaction_amount,
+    },
+    {
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id || req.body.user_id
+      },
+    });
     if (!updatedTransaction) {
       res.status(404).json({ error: 'Transaction not found' });
       return;
