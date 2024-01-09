@@ -27,15 +27,6 @@ router.get('/account', async (req, res) => {
   }
 });
 
-// Account Edit Page
-router.get('account/edit', async (req, res) => {
-  try {
-    res.render('account-edit', { layout: 'dashboard' });
-  } catch (err) {
-    json.status(500).json(err);
-  }
-});
-
 // Budget Page
 router.get('/budgets', async (req, res) => {
   try {
