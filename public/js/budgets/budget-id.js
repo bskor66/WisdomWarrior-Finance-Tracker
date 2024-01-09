@@ -4,6 +4,8 @@ const transactionExpense = document.querySelectorAll('[data-expense]');
 const transactionIncome = document.querySelectorAll('[data-income]');
 const createdAt = document.querySelectorAll('.created-at');
 const deleteTransaction = document.querySelectorAll('.delete-transaction');
+const editTransaction = document.querySelectorAll('.edit-transaction');
+const editTransactionModal = document.querySelector('#editTransactionModal');
 // console.log(transactionExpense)
 
 deleteTransaction.forEach((transaction) => {
