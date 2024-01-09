@@ -41,10 +41,10 @@ router.get('account/edit', async (req, res) => {
 router.get('/budgets', async (req, res) => {
   try {
     // make it look like this - do the thing
-    const budgets = await dashboardController.userBudgets()
+    // const budgets = await dashboardController.userBudgets()
     const budget = await Budgets.findAll({
       where: {
-        user_id: req.session.user_id,
+        user_id: req.session.user_id
       }
     });
     
@@ -52,7 +52,7 @@ router.get('/budgets', async (req, res) => {
 
     res.render('budgets', { layout: 'dashboard', budgetData });
   } catch (err) {
-    json.status(500).json(err);
+    console.log(err);
   }
 });
 

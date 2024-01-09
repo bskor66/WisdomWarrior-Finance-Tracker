@@ -1,15 +1,26 @@
-{{!< layouts/dashboard}}
+{{!< layouts/dashboard}} <main class="flex flex-col p-6 bg-gray-100 min-h-screen">
+  <header class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Budgets</h1>
+    <button
+      class="add-budget inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2">
+      Add Budget
+    </button>
+  </header>
 
-  <main class="flex flex-col p-6 bg-gray-100 min-h-screen">
-    <header class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-900">Budgets</h1>
-      <button id="add-budget"
-        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2">
-        Add Budget
-      </button>
-    </header>
-
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    {{#unless budgetData.length}}
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+      <div class="flex flex-col space-y-1.5 p-6">
+        <h3 class="text-2xl font-semibold leading-none tracking-tight text-center">No Budgets</h3>
+        <p class="text-sm text-muted-foreground text-center">You have not created any budgets yet.</p>
+      </div>
+      <div class="flex justify-center mt-4">
+        <button
+          class="add-budget inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
+          Add Budget
+        </button>
+      </div>
+      {{/unless}}
       {{#each budgetData}}
       <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
         <div class="flex flex-col space-y-1.5 p-6">
@@ -17,8 +28,8 @@
           <p class="text-sm text-muted-foreground text-center">Allocated: ${{amount}}</p>
         </div>
         <div class="flex justify-center mt-4">
-          <button id="edit-budget"
-            class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
+          <button data-id="{{id}}"
+            class="edit-budget inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-lg">
             Edit
           </button>
           <button data-id="{{id}}"
@@ -27,8 +38,49 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <dialog id="editBudgetModal" class="modal p-6 rounded-lg">
+      <div class="modal-box">
+        <form class="space-y-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              for="budget-name">
+              Budget Name
+            </label>
+            <input
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              id="budget-name" placeholder="Enter budget name" />
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              for="budget-amount">
+              Budget Amount
+            </label>
+            <input
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              id="budget-amount" placeholder="Enter budget amount" type="number" />
+          </div>
+          <div class="flex space-x-4">
+            <button
+              id="saveChangesBtn"
+              data-id="{{id}}"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+              type="submit">
+              Save Changes
+            </button>
+            <button
+            id="cancelChangesBtn"
+            onclick="editBudgetModal.close()"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 w-full bg-red-500 text-white"
+              type="button">
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
-      {{/each}}
-    </section>
+    </dialog>
+    {{/each}}
+  </section>
   </main>
   <script src="/js/budgets/budgets.js"></script>

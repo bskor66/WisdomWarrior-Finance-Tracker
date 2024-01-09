@@ -1,4 +1,10 @@
 const submitBtn = document.querySelector('#submitBtn');
+const cancelBtn = document.querySelector('#cancelBtn');
+
+cancelBtn.addEventListener('click', async (e) => {
+  e.preventDefault();
+  window.location.replace('/dashboard/budgets');
+});
 
 submitBtn.addEventListener('click', async (e) => {
   e.preventDefault();
