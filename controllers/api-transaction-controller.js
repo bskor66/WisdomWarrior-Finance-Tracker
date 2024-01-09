@@ -27,25 +27,25 @@ const getTransaction = async (req, res) => {
   }
 };
 const createTransaction = async (req, res) => {
-  try{
-    const { isExpense, transactionAmount,budgetId} = req.body;
+  try {
+    const { isExpense, transactionAmount, budgetId } = req.body;
 
+    if (!req.body.isExpense || !req.body.transactionAmount) {
+      res.status(400).json({ error: 'Must include Id, Amount, type and what budget its apart of.' });
+      return;
+    }
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to create a Transaction' });
+      return;
+    }
     const newTransaction = await Transactions.create({
       is_expense: isExpense,
       transaction_amount: transactionAmount,
       user_id: req.session.user_id,
       budget_id: budgetId,
     });
-    if (!req.session.user_id && !req.body.user_id) {
-      res.status(400).json({ error: 'Must be logged in to create a Transation' });
-      return;
-    }
-    if (!req.body.name || !req.body.amount) {
-      res.status(400).json({ error: 'Must include Id, Amount, type and what budget its apart of.' });
-      return;
-    }
     res.json(newTransaction);
-  } catch(error){
+  } catch (error) {
     console.error('Error creating transaction:', error);
 
     // Send an error response to the client
@@ -65,32 +65,32 @@ const deleteTransaction = async (req, res) => {
   }
 };
 const updateTransaction = async (req, res) => {
-try {
-const updatedTransaction = await Transactions.update({
-  transaction_amount: req.body.transaction_amount,
-  },
-  {
-    where:{
-      id: req.params.id,
-      user_id: req.session.user_id || req.body.user_id
+  try {
+    const updatedTransaction = await Transactions.update({
+      transaction_amount: req.body.transaction_amount,
     },
-  });
-  if (!req.body.name || !req.body.transaction_amount) {
-    res.status(400).json({ error: 'Must include amount' });
-    return;
-  }
-  if (!req.session.user_id && !req.body.user_id) {
-    res.status(400).json({ error: 'Must be logged in to update a transaction' });
-    return;
-  }
-  if (!updatedTransaction) {
-    res.status(404).json({ error: 'Transaction not found' });
-    return;
-  }
-  res.json(updatedTransaction);
-} catch {
+      {
+        where: {
+          id: req.params.id,
+          user_id: req.session.user_id || req.body.user_id
+        },
+      });
+    if (!req.body.name || !req.body.transaction_amount) {
+      res.status(400).json({ error: 'Must include amount' });
+      return;
+    }
+    if (!req.session.user_id && !req.body.user_id) {
+      res.status(400).json({ error: 'Must be logged in to update a transaction' });
+      return;
+    }
+    if (!updatedTransaction) {
+      res.status(404).json({ error: 'Transaction not found' });
+      return;
+    }
+    res.json(updatedTransaction);
+  } catch {
 
-}
+  }
 };
 module.exports = {
   getAllTransactions,
