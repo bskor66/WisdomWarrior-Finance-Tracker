@@ -3,15 +3,15 @@ document
   .addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const oldPassword = document.querySelector('#old-password').value;
+    const currentPassword = document.querySelector('#old-password').value;
     const newPassword = document.querySelector('#new-password').value;
 
-    const response = await fetch('/change-password', {
+    const response = await fetch(`/api/users/${req.session.user_id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ oldPassword, newPassword }),
+      body: JSON.stringify({ currentPassword, newPassword }),
     });
 
     if (response.ok) {
