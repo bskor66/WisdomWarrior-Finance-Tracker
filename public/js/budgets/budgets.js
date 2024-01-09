@@ -4,12 +4,17 @@ const deleteBudget = document.querySelectorAll('.delete-budget');
 const saveChangesBtn = document.querySelector('#saveChangesBtn');
 const cancelChangesBtn = document.querySelector('#cancelChangesBtn');
 const editBudgetModal = document.querySelector('#editBudgetModal');
-console.log(deleteBudget)
+const budgetName = document.querySelectorAll('.budget-name');
+// console.log(deleteBudget)
 
-// addBudget.addEventListener('click', async (e) => {
-//   e.preventDefault();
-//   window.location.replace('/dashboard/budgets/add');
-// })
+budgetName.forEach(card => {
+  card.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const budgetId = e.target.dataset.id;
+    // console.log(budgetId)
+    window.location.replace(`/dashboard/budgets/${budgetId}`);
+  })
+});
 
 addBudget.forEach(button => {
   button.addEventListener('click', async (e) => {
