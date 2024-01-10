@@ -50,8 +50,6 @@ router.get('/account', async (req, res) => {
 // Budget Page
 router.get('/budgets', async (req, res) => {
   try {
-    // make it look like this - do the thing
-    // const budgets = await dashboardController.userBudgets()
     const budget = await Budgets.findAll({
       where: {
         user_id: req.session.user_id
