@@ -1,6 +1,6 @@
 const form = document.getElementById('signupForm');
 
-const sendData = async (data) => {
+const sendData = async (userData) => {
   try {
     const response = await fetch('api/users/signup', {
       method: 'POST',
@@ -24,7 +24,7 @@ const sendData = async (data) => {
 const handleFormSubmit = (event) => {
   event.preventDefault();
   const formData = new FormData(form);
-  const userData = {
+  let userData = {
     firstName: formData.get('firstName'),
     lastName: formData.get('lastName'),
     userEmail: formData.get('email'),
