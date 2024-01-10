@@ -6,7 +6,59 @@ const createdAt = document.querySelectorAll('.created-at');
 const deleteTransaction = document.querySelectorAll('.delete-transaction');
 const editTransaction = document.querySelectorAll('.edit-transaction');
 const editTransactionModal = document.querySelector('#editTransactionModal');
+const closeTransactionModal = document.querySelector('#closeTransactionModal');
+const saveTransactionModal = document.querySelector('#saveTransactionModal');
+const addTransaction = document.querySelector('#add-transaction');
 // console.log(transactionExpense)
+
+backToBudgets.addEventListener('click', () => {
+  window.location.href = '/dashboard/budgets';
+});
+
+addTransaction.addEventListener('click', () => {
+  window.location.href = '/dashboard/transactions/add';
+  
+});
+
+editTransaction.forEach((transaction) => {
+  transaction.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const transactionId = transaction.dataset.id;
+    const response = await fetch(`/api/transactions/${transactionId}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (response.ok) {
+      const transaction = await response.json();
+      document.querySelector('#transaction-amount').value = transaction.transaction_amount;
+      editTransactionModal.showModal(); 
+    }
+  });
+});
+
+saveTransactionModal.addEventListener('click', async (e) => {
+  e.preventDefault();
+
+  const transactionId = e.target.dataset.id;
+  console.log(transactionId)
+
+  let transaction_amount = document.querySelector('#transaction-update').value;
+  const response = await fetch(`/api/transactions/${transactionId}`, {
+    method: 'PUT',
+    body: JSON.stringify({ transaction_amount }),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  if (response.ok) {
+    window.location.reload();
+  } else {
+    alert('Failed to update transaction');
+  }
+});
+
+closeTransactionModal.addEventListener('click', () => {
+  editTransactionModal.close();
+});
+
 
 deleteTransaction.forEach((transaction) => {
   transaction.addEventListener('click', async (e) => {
@@ -62,7 +114,4 @@ let remaining = dollarAmountRemaining.dataset.remaining - expenseTotal;
 dollarAmountRemaining.textContent = remaining || dollarAmountRemaining.dataset.remaining;
 
 
-backToBudgets.addEventListener('click', () => {
-  window.location.href = '/dashboard/budgets';
-});
 
