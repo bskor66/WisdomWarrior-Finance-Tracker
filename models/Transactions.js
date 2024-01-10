@@ -19,7 +19,7 @@ Transactions.init(
     },
     // Amount of Transaction
     transaction_amount: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     // FK Id of User
