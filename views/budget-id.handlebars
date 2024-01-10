@@ -1,0 +1,112 @@
+{{!< layouts/dashboard}} <main class="flex flex-col p-6 bg-gray-100 min-h-screen mb-0 bg-gray-700">
+  <header class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-white  ">Budgets</h1>
+    <button id="back-to-budgets"
+      class="bg-blue-500 text-white inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2">
+      Back
+    </button>
+  </header>
+
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+      <div class=" bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm ">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 data-id="{{budgetData.id}}"
+            class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center transition ease-in-out">
+            {{budgetData.name}}</h3>
+          <p class="text-sm text-white text-muted-foreground text-center">Allocated: ${{budgetData.amount}}</p>
+        </div>
+        <div class="flex justify-center mt-4 gap-2">
+        </div>
+      </div>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+      <div class=" bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm ">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3
+            class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center transition ease-in-out">
+            Remaining</h3>
+          <p class="text-sm text-white text-muted-foreground text-center">$<span data-remaining="{{budgetData.amount}}"
+              id="dollarAmountRemaining"></span></p>
+        </div>
+        <div class="flex justify-center mt-4 gap-2">
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="border rounded-lg w-vw">
+      <div class="relative w-full overflow-auto">
+        <div class="relative w-full overflow-auto">
+          <table class="text-white w-full caption-bottom text-sm">
+            <thead class="[&amp;_tr]:border-b">
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <th class="w-max-fit h-12 pr-2 text-left align-middle font-medium text-muted-foreground">
+                  Is Expense
+                </th>
+                <th class="w-fit h-12 pr-2 text-left align-middle font-medium text-muted-foreground">
+                  Transaction Amount
+                </th>
+                <th class="w-fit h-12 pr-2 text-left align-middle font-medium text-muted-foreground">
+                  Create Date
+                </th>
+              </tr>
+            </thead>
+            <tbody class="text-white [&amp;_tr:last-child]:border-0">
+              {{#each transactionsData}}
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-2 align-middle font-medium">{{is_expense}}</td>
+                {{#if is_expense}}
+                <td data-expense="{{transaction_amount}}" class="transaction-expense text-red-500 p-2 align-middle">-
+                  ${{transaction_amount}}
+                </td>
+                {{else}}
+                <td data-income="{{transaction_amount}}" class="text-white transaction-income p-2 align-middle">
+                  ${{transaction_amount}}
+                </td>
+                {{/if}}
+                <td data-timestamp="{{createdAt}}" class="created-at p-2 align-middle"></td>
+                <td class="p-2 align-middle">
+                  <div class="flex flex-col md:flex-row lg:flex-row gap-2 justify-end">
+                    <button
+                      class=" edit-trasaction max-w-24 text-white inline-flex bg-blue-500 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                      Edit
+                    </button>
+                    <button data-id="{{id}}"
+                      class=" delete-transaction max-w-24 text-white inline-flex bg-gray-900 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          {{#unless transactionsData}}
+          <div class="flex flex-col items-center justify-center p-6">
+            <h3 class="text-2xl font-semibold text-white">No Transactions</h3>
+            <p class="text-sm text-white text-muted-foreground">Add a transaction to get started</p>
+            {{/unless}}
+          </div>
+        </div>
+      </div>
+  </section>
+  <dialog id="editTransactionModal" class="modal p-6 rounded-lg">
+    <div class="flex items-end justify-between w-full max-w-md mx-auto">
+      <div class="flex flex-col space-y-2 w-2/3">
+        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          for="amount">
+          Transaction Amount
+        </label>
+        <input
+          class="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 bg-[#f0f0f0] dark:bg-[#1a1a1a]"
+          id="amount" placeholder="Enter new amount" type="number" />
+      </div>
+      <button
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
+        Save
+      </button>
+    </div>
+  </dialog>
+  </main>
+  <script src="/js/budgets/budget-id.js"></script>
