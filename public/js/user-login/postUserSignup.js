@@ -1,19 +1,20 @@
 const form = document.getElementById('signupForm');
 
-const sendData = async (data) => {
+const sendData = async (userData) => {
   try {
     const response = await fetch('api/users/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(userData),
     });
-
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
     if (response.ok) {
       window.location.href = '/dashboard';
     } else {
-      console.error('Error: Signup was not successful');
+      alert('Failed to sign up.');
     }
   } catch (error) {
     console.error('Error sending data:', error);
@@ -23,7 +24,7 @@ const sendData = async (data) => {
 const handleFormSubmit = (event) => {
   event.preventDefault();
   const formData = new FormData(form);
-  const userData = {
+  let userData = {
     firstName: formData.get('firstName'),
     lastName: formData.get('lastName'),
     userEmail: formData.get('email'),
