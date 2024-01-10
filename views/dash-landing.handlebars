@@ -22,28 +22,28 @@
     >
       <h2 class='text-lg sm:text-2xl font-bold mb-6 text-center'>Recent
         Transactions</h2>
-      <ul>
+      <ul class='list-disc pl-5'>
         {{#each transactionData}}
-          <ul class='list-disc'>
-            {{#each transactionData}}
-              <li class='mb-4'>
-                <div class='ml-4'>
-                  <span class='font-bold'>Date/Time:</span>
-                  {{formatDate this.createdAt}}
-                </div>
-                <div class='ml-4'>
-                  <span class='font-bold'>Amount:</span>
-                  ${{this.transaction_amount}}
-                </div>
-                <div class='ml-4'>
-                  <span class='font-bold'>Type:</span>
-                  {{#if this.is_expense}}Expense{{else}}Income{{/if}}
-                </div>
+          <li class='mb-4'>
+            <div class='font-bold'>Transaction:</div>
+            <ul class='list-inside list-disc'>
+              <li>
+                <span class='font-semibold'>Date/Time:</span>
+                {{formatDate this.createdAt}}
               </li>
-            {{/each}}
-          </ul>
+              <li>
+                <span class='font-semibold'>Amount:</span>
+                ${{this.transaction_amount}}
+              </li>
+              <li>
+                <span class='font-semibold'>Type:</span>
+                {{#if this.is_expense}}Expense{{else}}Income{{/if}}
+              </li>
+            </ul>
+          </li>
         {{/each}}
       </ul>
+
     </div>
   </div>
 </section>
