@@ -119,6 +119,13 @@ router.get('/transactions', async (req, res) => {
   }
 });
 
+router.get('/transactions/add', async (req, res) => {
+  try {
+    res.render('transactions-add', { layout: 'dashboard' });
+  } catch (err) {
+    console.log(err);
+  }
+});
 // transactions by id
 router.get('/transactions/add', async (req, res) => {
   try {
