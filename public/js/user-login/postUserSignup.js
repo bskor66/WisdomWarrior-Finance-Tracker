@@ -1,17 +1,16 @@
 const form = document.getElementById('signupForm');
 
-const sendData = async (userData) => {
+const sendData = async (data) => {
   try {
-    const response = await fetch('/api/users/signup', {
+    const response = await fetch('api/users/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
     });
-    if (response.ok) {
-      window.location.href = '/dashboard';
-    }
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
   } catch (error) {
     console.error('Error sending data:', error);
   }

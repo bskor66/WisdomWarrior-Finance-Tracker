@@ -86,13 +86,13 @@ const postUser = async (req, res) => {
       first_name: firstName,
       last_name: lastName,
       email: userEmail,
-      password: userPassword
-    })
+      password: userPassword,
+    });
     req.session.save(() => {
-      req.session.logged_in = true
-      req.session.user_id = createNewUser.id
-      res.status(200).json(createNewUser)
-    })
+      req.session.logged_in = true;
+      req.session.user_id = createNewUser.id;
+      res.status(200).json(createNewUser);
+    });
   } catch (error) {
     if (
       error.name === 'SequelizeValidationError' ||
@@ -114,10 +114,10 @@ const updateUser = async (req, res) => {
   try {
     // * pass in current password, new password, and email
     const { currentPassword, newPassword, email } = req.body;
-    if (!currentPassword ) {
+    if (!currentPassword) {
       res.status(400).json('Please enter your current password');
       return;
-    };
+    }
     if (!newPassword) {
       res.status(400).json('Please enter a new password');
       return;
@@ -125,7 +125,7 @@ const updateUser = async (req, res) => {
     if (!req.session.logged_in) {
       res.status(400).json('No user logged in');
       return;
-    };
+    }
     if (currentPassword === newPassword) {
       res.status(400).json('New password cannot be the same as old password');
       return;
@@ -133,7 +133,7 @@ const updateUser = async (req, res) => {
     if (newPassword.length < 8) {
       res.status(400).json('Password must be at least 8 characters');
       return;
-    };
+    }
     // check the provided password against the database
     const userData = await User.findOne({
       where: {
@@ -149,15 +149,18 @@ const updateUser = async (req, res) => {
     if (!valid) {
       res.status(400).json('Incorrect password');
       return;
-    };
-    const updateUser = await User.update({
-      email: email,
-      password: await bcrypt.hash(newPassword, 10)
-    }, {
-      where: {
-        id: req.params.id,
+    }
+    const updateUser = await User.update(
+      {
+        email: email,
+        password: await bcrypt.hash(newPassword, 10),
       },
-    });
+      {
+        where: {
+          id: req.params.id,
+        },
+      },
+    );
     if (!updateUser) {
       res.status(400).json('No user found with that ID');
       return;
@@ -250,16 +253,22 @@ const postTransaction = async (req, res) => {
     const newTransaction = await Transactions.create({
       is_expense: req.body.is_expense,
       transaction_amount: req.body.transaction_amount,
-      user_id: req.params.user_id||req.body.user_id,
+      user_id: req.params.user_id || req.body.user_id,
       budget_id: req.body.budget_id,
     });
     if (!req.session.user_id && !req.body.user_id) {
-      res.status(400).json({ error: 'Must be logged in to create a Transation' });
+      res
+        .status(400)
+        .json({ error: 'Must be logged in to create a Transaction' });
       return;
     }
 
     if (!req.body.name || !req.body.amount) {
-      res.status(400).json({ error: 'Must include Id, type, Amount and what budget its apart of.' });
+      res
+        .status(400)
+        .json({
+          error: 'Must include Id, type, Amount and what budget its apart of.',
+        });
       return;
     }
     res.json(newTransaction);
@@ -278,7 +287,7 @@ const deleteBudget = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-}
+};
 const deleteTransaction = async (req, res) => {
   try {
     const deleteTransaction = await Transactions.destroy({
@@ -290,7 +299,7 @@ const deleteTransaction = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-}
+};
 
 module.exports = {
   indexAllUsers,
