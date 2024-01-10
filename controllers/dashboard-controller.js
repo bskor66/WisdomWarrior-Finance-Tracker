@@ -2,7 +2,7 @@ const { User, Budgets, Transactions } = require('../models');
 
 
 // Queries user data - excludes password - includes budgets and transactions
-const userData = async (req, res) => {
+const userData = async (user_id) => {
   try {
     const user = await User.findByPk(req.session.user_id, {
       attributes: {
