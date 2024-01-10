@@ -13,10 +13,22 @@ router.get('/', async (req, res) => {
       order: [['createdAt', 'DESC']],
       limit: 5,
     });
+
+    const budget = await Budgets.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
+    });
+
+    const budgetData = budget.map((budget) => budget.get({ plain: true }));
     const transactionData = transactions.map((transaction) =>
       transaction.get({ plain: true }),
     );
-    res.render('dash-landing', { layout: 'dashboard', transactionData });
+    res.render('dash-landing', {
+      layout: 'dashboard',
+      transactionData,
+      budgetData,
+    });
   } catch (err) {
     console.log(err);
   }
