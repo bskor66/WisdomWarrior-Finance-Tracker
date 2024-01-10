@@ -1,40 +1,45 @@
-{{!< layouts/dashboard}}
-    <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-        <div>
-            <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-                <div class="relative w-full overflow-auto">
-                    <table class="w-full caption-bottom text-sm">
-                        <thead class="[&_tr]:border-b">
-                            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                <th
-                                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 w-[100px]">
-                                    Date
-                                </th>
-                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                    Description
-                                </th>
-                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                    Amount
-                                </th>
-                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                    Category
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="[&_tr:last-child]:border-0">
-                            {{#each Transactions}}
-                            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium">{{date}}</td>
-                                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">{{budgetType}}</td>
-                                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">{{transactionAmount}}</td>
-                                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">{{isExpense}}</td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                
-                </div>
-            </div>
-        </div>
-    </main>
-</div>
+{{!< layouts/dashboard}} <main class="">
+  {{#unless Transactions.length}}
+  <section class="">
+    <div class="">
+      <div class="">
+        <h3 class="">No Transactions</h3>
+        <p class="">You have not created any Transactions yet.</p>
+      </div>
+      <div class="">
+        <button class="add-transaction">Add Transactions</button>
+      </div>
+    </div>
+  </section>
+  {{else}}
+  <div>
+    <div class="">
+      <div class="">
+        <table class="">
+          <thead class="data-table-header">
+            <tr class="data-titles">
+              <th class="date">Date</th>
+              <th class="budgetType">Budget Type</th>
+              <th class="amount">Amount</th>
+              <th class="expense">Expense?</th>
+              <th class="delete">Delete?</th>
+            </tr>
+          </thead>
+          <tbody class="data-table-body">
+            {{#each Transactions}}
+            <tr class="data-row">
+              <td class="date">{{date}}</td>
+              <td class="budget-type">{{budgetType}}</td>
+              <td class="transaction-amount">{{transactionAmount}}</td>
+              <td class="is-expense">{{isExpense}}</td>
+              <td class="delete"><button class="delete-btn"></button>Delete</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {{/unless}}
+  <script src="../public/js/Transactions/transactions.js"></script>
+  </main>
