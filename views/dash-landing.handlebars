@@ -4,18 +4,46 @@
     <div
       class='bg-gray-900 text-white rounded-lg shadow-lg p-4 sm:p-8 min-w-64 flex-1'
     >
-      <h2 class='text-lg sm:text-2xl font-bold mb-6 text-center'>Total Spending</h2>
+      <h2 class='text-lg sm:text-2xl font-bold mb-6 text-center'>Budgets</h2>
+      <ul class='list-disc'>
+        {{#each budgetData}}
+          <li class='mb-4'>
+            <div>
+              {{this.name}}
+              -
+              {{this.amount}}
+            </div>
+          </li>
+        {{/each}}
+      </ul>
     </div>
     <div
       class='bg-gray-900 text-white rounded-lg shadow-lg p-4 sm:p-8 min-w-64 flex-1'
     >
       <h2 class='text-lg sm:text-2xl font-bold mb-6 text-center'>Recent
         Transactions</h2>
-    </div>
-    <div
-      class='bg-gray-900 text-white rounded-lg shadow-lg p-4 sm:p-8 min-w-64 flex-1'
-    >
-      <h2 class='text-lg sm:text-2xl font-bold mb-6 text-center'>#</h2>
+      <ul class='list-disc pl-5'>
+        {{#each transactionData}}
+          <li class='mb-4'>
+            <div class='font-bold'>Transaction:</div>
+            <ul class='list-inside list-disc'>
+              <li>
+                <span class='font-semibold'>Date/Time:</span>
+                {{formatDate this.createdAt}}
+              </li>
+              <li>
+                <span class='font-semibold'>Amount:</span>
+                ${{this.transaction_amount}}
+              </li>
+              <li>
+                <span class='font-semibold'>Type:</span>
+                {{#if this.is_expense}}Expense{{else}}Income{{/if}}
+              </li>
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
+
     </div>
   </div>
 </section>
