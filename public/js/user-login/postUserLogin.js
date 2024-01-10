@@ -11,6 +11,8 @@ const sendData = async (userData) => {
     });
     if (response.ok) {
       window.location.href = '/dashboard';
+    } else {
+      alert('Incorrect email or password, please try again.');
     }
   } catch (error) {
     console.error('Error sending data:', error);

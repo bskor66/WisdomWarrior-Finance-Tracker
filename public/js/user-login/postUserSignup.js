@@ -11,6 +11,11 @@ const sendData = async (data) => {
     });
     const jsonResponse = await response.json();
     console.log(jsonResponse);
+    if (response.ok) {
+      window.location.href = '/dashboard';
+    } else {
+      alert('Failed to sign up.');
+    }
   } catch (error) {
     console.error('Error sending data:', error);
   }
