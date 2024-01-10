@@ -120,6 +120,14 @@ router.get('/transactions', async (req, res) => {
 });
 
 // transactions by id
+router.get('/transactions/add', async (req, res) => {
+  try {
+    res.render('transactions-add', { layout: 'dashboard' });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.get('/transactions/:id', async (req, res) => {
   try {
 
@@ -138,12 +146,5 @@ router.get('/transactions/:id', async (req, res) => {
 });
 
 // Transactions Add Page
-router.get('/transactions/add', async (req, res) => {
-  try {
-    res.render('transactions-add', { layout: 'dashboard' });
-  } catch (err) {
-    console.log(err);
-  }
-});
 
 module.exports = router;
