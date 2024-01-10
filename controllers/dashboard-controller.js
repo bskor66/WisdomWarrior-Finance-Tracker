@@ -1,5 +1,6 @@
 const { User, Budgets, Transactions } = require('../models');
 
+
 // Queries user data - excludes password - includes budgets and transactions
 const userData = async (user_id) => {
   try {
@@ -41,7 +42,7 @@ const userBudgets = async (req, res) => {
     }
   });
   const budgetsData = budgets.map((budget) => budget.get({ plain: true }));
-  return budgetsData;
+  return budgets;
 };
 
 // Queries user budgets by id
