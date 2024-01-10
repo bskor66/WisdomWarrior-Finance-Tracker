@@ -104,72 +104,46 @@ router.get('/budgets/:id', async (req, res) => {
 
 // Transactions Page
 router.get('/transactions', async (req, res) => {
-  // try {
-  //   const transactions = dashboardController.userTransactions
+  try {
 
-  //   res.render('transactions', { layout: 'dashboard', transactions });
-  // } catch (err) {
-  //   json.status(500).json(err);
-  // }
-  //   try {
-  //     // const budgets = dashboardController.userBudgets;
+    const transactions = await Transactions.findAll({
+      where: {
+        user_id: req.session.user_id,
+      }
+    });
+    const transactionData = transactions.map((transaction) => transaction.get({ plain: true }));
 
-  //     res.render('budgets', { layout: 'dashboard', budgets });
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-});
-
-// budget by id
-// router.get('budgets/:id', async (req, res) => {
-//   try {
-//     const budgets = dashboardController.userBudgetsById;
-
-//     res.render('budget', { layout: 'dashboard', budgets });
-//   } catch (err) {
-//     json.status(500).json(err);
-//   }
-// });
-
-// // Add Budget Page
-// router.get('/budgets/add', async (req, res) => {
-//   try {
-//     res.render('budget-edit', { layout: 'dashboard' });
-//   } catch (err) {
-//     json.status(500).json(err);
-//   }
-// });
-
-// Transactions Page
-router.get('/transactions', async (req, res) => {
-  // try {
-  //   const transactions = dashboardController.userTransactions;
-
-  //   res.render('transactions', { layout: 'dashboard', transactions });
-  // } catch (err) {
-  //   json.status(500).json(err);
-  // }
+    res.render('transactions', { layout: 'dashboard', transactionData });
+  } catch (err) {
+    console.log(err); 
+  }
 });
 
 // transactions by id
 router.get('/transactions/:id', async (req, res) => {
-  // try {
-  //   const transactions = dashboardController.userTransactionsById;
+  try {
 
+    const transaction = await Transactions.findByPk(req.params.id, {
+      where: {
+        user_id: req.session.user_id,
+        id: req.params.id,
+      }
+    });
+    const transactionData = transaction.get({ plain: true });
 
-  //   res.render('transactions', { layout: 'dashboard', transactions });
-  // } catch (err) {
-  //   json.status(500).json(err);
-  // }
+    res.render('transactions-id', { layout: 'dashboard', transactionData });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // Transactions Add Page
 router.get('/transactions/add', async (req, res) => {
-  // try {
-  //   res.render('transactions-add', { layout: 'dashboard' });
-  // } catch (err) {
-  //   json.status(500).json(err);
-  // }
+  try {
+    res.render('transactions-add', { layout: 'dashboard' });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;

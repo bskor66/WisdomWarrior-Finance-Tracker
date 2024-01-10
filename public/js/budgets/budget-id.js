@@ -8,6 +8,22 @@ const editTransaction = document.querySelectorAll('.edit-transaction');
 const editTransactionModal = document.querySelector('#editTransactionModal');
 // console.log(transactionExpense)
 
+editTransaction.forEach((transaction) => {
+  transaction.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const transactionId = transaction.dataset.id;
+    const response = await fetch(`/api/transactions/${transactionId}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (response.ok) {
+      const transaction = await response.json();
+      document.querySelector('#transaction-amount').value = transaction.transaction_amount;
+    }
+  });
+})
+
+
 deleteTransaction.forEach((transaction) => {
   transaction.addEventListener('click', async (e) => {
     e.preventDefault();
@@ -60,7 +76,6 @@ transactionIncome.forEach((transaction) => {
 let remaining = dollarAmountRemaining.dataset.remaining - expenseTotal;
 
 dollarAmountRemaining.textContent = remaining || dollarAmountRemaining.dataset.remaining;
-
 
 backToBudgets.addEventListener('click', () => {
   window.location.href = '/dashboard/budgets';
