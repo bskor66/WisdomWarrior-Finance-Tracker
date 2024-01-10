@@ -1,20 +1,26 @@
 {{!< layouts/dashboard}} 
-<main class="">
+  <main class="flex flex-col p-6 bg-gray-100 min-h-screen mb-0 bg-gray-700">
+  <header class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-white  ">Transactions</h1>
+    <button
+      class="add-transaction bg-blue-500 text-white inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2">
+      Add Transaction
+    </button>
+  </header>
+
   {{#unless Transactions.length}}
     <section class="">
-      <div class="" data-v0-t="card">
+      <div class="" >
         <div class="">
           <h3 class="">No Transactions</h3>
           <p class="">You have not created any Transactions yet.</p>
         </div>
-        <div class="">
-          <button class="add-transaction">Add Transactions</button>
-        </div>
+       
       </div>
     </section>
   {{else}}
     <div>
-      <div class="" data-v0-t="card">
+      <div class="">
         <div class="">
           <table class="">
             <thead class="data-table-header">
@@ -42,5 +48,5 @@
       </div>
     </div>
   {{/unless}}
-  <script src="../public/js/Transactions/transactions.js"></script>
+  <script src="/js/Transactions/transactions.js"></script>
 </main>
