@@ -9,8 +9,11 @@ const sendData = async (userData) => {
       },
       body: JSON.stringify(userData),
     });
-    const jsonResponse = await response.json();
-    console.log(jsonResponse);
+    if (response.ok) {
+      window.location.href = '/dashboard';
+    } else {
+      alert('Incorrect email or password, please try again.');
+    }
   } catch (error) {
     console.error('Error sending data:', error);
   }
@@ -18,7 +21,7 @@ const sendData = async (userData) => {
 
 const handleFormSubmit = (event) => {
   event.preventDefault();
-  let formData = new FormData(form);
+  const formData = new FormData(form);
   const userData = {
     email: formData.get('email'),
     password: formData.get('password'),
