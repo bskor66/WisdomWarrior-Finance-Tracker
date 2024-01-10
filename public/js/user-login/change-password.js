@@ -1,3 +1,9 @@
+const changePasswordBtn = document.querySelector('#changePasswordBtn');
+console.log(changePasswordBtn)
+
+let id = changePasswordBtn.dataset.id;
+console.log(id)
+
 document
   .getElementById('changePasswordForm')
   .addEventListener('submit', async (event) => {
@@ -6,8 +12,8 @@ document
     const currentPassword = document.querySelector('#old-password').value;
     const newPassword = document.querySelector('#new-password').value;
 
-    const response = await fetch(`/api/users/${req.session.user_id}`, {
-      method: 'POST',
+    const response = await fetch(`/api/users/${id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
