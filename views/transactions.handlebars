@@ -1,45 +1,46 @@
-{{!< layouts/dashboard}} <main class="">
+{{!< layouts/dashboard}} 
+<main class="">
   {{#unless Transactions.length}}
-  <section class="">
-    <div class="">
-      <div class="">
-        <h3 class="">No Transactions</h3>
-        <p class="">You have not created any Transactions yet.</p>
+    <section class="">
+      <div class="" data-v0-t="card">
+        <div class="">
+          <h3 class="">No Transactions</h3>
+          <p class="">You have not created any Transactions yet.</p>
+        </div>
+        <div class="">
+          <button class="add-transaction">Add Transactions</button>
+        </div>
       </div>
-      <div class="">
-        <button class="add-transaction">Add Transactions</button>
-      </div>
-    </div>
-  </section>
+    </section>
   {{else}}
-  <div>
-    <div class="">
-      <div class="">
-        <table class="">
-          <thead class="data-table-header">
-            <tr class="data-titles">
-              <th class="date">Date</th>
-              <th class="budgetType">Budget Type</th>
-              <th class="amount">Amount</th>
-              <th class="expense">Expense?</th>
-              <th class="delete">Delete?</th>
-            </tr>
-          </thead>
-          <tbody class="data-table-body">
-            {{#each Transactions}}
-            <tr class="data-row">
-              <td class="date">{{date}}</td>
-              <td class="budget-type">{{budgetType}}</td>
-              <td class="transaction-amount">{{transactionAmount}}</td>
-              <td class="is-expense">{{isExpense}}</td>
-              <td class="delete"><button class="delete-btn"></button>Delete</td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
+    <div>
+      <div class="" data-v0-t="card">
+        <div class="">
+          <table class="">
+            <thead class="data-table-header">
+              <tr class="data-titles">
+                <th class="date">Date</th>
+                <th class="budgetType">Budget Type</th>
+                <th class="amount">Amount</th>
+                <th class="expense">Expense?</th>
+                <th class="delete">Delete?</th>
+              </tr>
+            </thead>
+            <tbody class="data-table-body">
+              {{#each Transactions}}
+                <tr class="data-row">
+                  <td class="date">{{date}}</td>
+                  <td class="budget-type">{{budgetType}}</td>
+                  <td class="transaction-amount">{{transactionAmount}}</td>
+                  <td class="is-expense">{{isExpense}}</td>
+                  <td class="delete"><button class="delete-btn"></button>Delete</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
   {{/unless}}
   <script src="../public/js/Transactions/transactions.js"></script>
-  </main>
+</main>
