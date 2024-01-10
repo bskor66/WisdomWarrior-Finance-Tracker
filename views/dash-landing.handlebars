@@ -5,7 +5,7 @@
       class='bg-gray-900 text-white rounded-lg shadow-lg p-4 sm:p-8 min-w-64 flex-1'
     >
       <h2 class='text-lg sm:text-2xl font-bold mb-6 text-center'>Budgets</h2>
-      <ul>
+      <ul class='list-disc'>
         {{#each budgetData}}
           <li class='mb-4'>
             <div>
@@ -24,20 +24,24 @@
         Transactions</h2>
       <ul>
         {{#each transactionData}}
-          <li class='mb-4'>
-            <div>
-              <span class='font-bold'>Date/Time:</span>
-              {{formatDate this.createdAt}}
-            </div>
-            <div>
-              <span class='font-bold'>Amount:</span>
-              ${{this.transaction_amount}}
-            </div>
-            <div>
-              <span class='font-bold'>Type:</span>
-              {{#if this.is_expense}}Expense{{else}}Income{{/if}}
-            </div>
-          </li>
+          <ul class='list-disc list-inside'>
+            {{#each transactionData}}
+              <li class='mb-4'>
+                <div class='ml-4'>
+                  <span class='font-bold'>Date/Time:</span>
+                  {{formatDate this.createdAt}}
+                </div>
+                <div class='ml-4'>
+                  <span class='font-bold'>Amount:</span>
+                  ${{this.transaction_amount}}
+                </div>
+                <div class='ml-4'>
+                  <span class='font-bold'>Type:</span>
+                  {{#if this.is_expense}}Expense{{else}}Income{{/if}}
+                </div>
+              </li>
+            {{/each}}
+          </ul>
         {{/each}}
       </ul>
     </div>
