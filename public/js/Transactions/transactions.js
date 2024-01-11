@@ -50,41 +50,6 @@ addTransaction.forEach(button => {
       }
     });
   });
-// editTransaction.forEach((transaction) => {
-//   transaction.addEventListener('click', async (e) => {
-//     e.preventDefault();
-//     const transactionId = transaction.dataset.id;
-//     const response = await fetch(`/api/transactions/${transactionId}`, {
-//       method: 'GET',
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-//     if (response.ok) {
-//       const transaction = await response.json();
-//       document.querySelector('#transaction-amount').value = transaction.transaction_amount;
-//       editTransactionModal.showModal(); 
-//     }
-//   });
-// });
-
-// saveTransactionModal.addEventListener('click', async (e) => {
-//   e.preventDefault();
-
-//   const transactionId = e.target.dataset.id;
-//   console.log(transactionId)
-
-//   let transaction_amount = document.querySelector('#transaction-update').value;
-//   const response = await fetch(`/api/transactions/${transactionId}`, {
-//     method: 'PUT',
-//     body: JSON.stringify({ transaction_amount }),
-//     headers: { 'Content-Type': 'application/json' },
-//   });
-//   if (response.ok) {
-//     window.location.reload();
-//   } else {
-//     alert('Failed to update transaction');
-//   }
-// });
-
 closeTransactionModal.addEventListener('click', () => {
   editTransactionModal.close();
 });
