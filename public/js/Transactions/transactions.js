@@ -1,6 +1,3 @@
-
-const transactionExpense = document.querySelectorAll('[data-expense]');
-const transactionIncome = document.querySelectorAll('[data-income]');
 const createdAt = document.querySelectorAll('.created-at');
 const deleteTransaction = document.querySelectorAll('.delete-transaction');
 const editTransaction = document.querySelectorAll('.edit-transaction');
@@ -93,21 +90,3 @@ createdAt.forEach((date) => {
   // console.log(formattedDate);
 
 });
-
-let expenseTotal = 0
-transactionExpense.forEach((transaction) => {
-  const expense = parseInt(transaction.dataset.expense);
-  expenseTotal += expense;
-});
-
-let incomeTotal = 0
-transactionIncome.forEach((transaction) => {
-  const income = parseInt(transaction.dataset.income);
-  incomeTotal += income;
-});
-
-// budgetName.forEach((transaction) => {
-//   var budgetId = td.getAttribute('data-budget-id');
-//   const budgetName = transaction.budgetID
-//   console.log(budgetId)
-// });
