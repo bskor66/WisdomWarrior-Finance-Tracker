@@ -148,6 +148,28 @@ router.get('/transactions', async (req, res) => {
   }
 });
 
+router.get('/transactions/add', async (req, res) => {
+  try {
+
+    const transactions = await Transactions.findAll({
+      where: {
+        user_id: req.session.user_id,
+      }
+    });
+    const transactionData = transactions.map((transaction) => transaction.get({ plain: true }));
+
+    const budget = await Budgets.findAll({
+      where: {
+        user_id: req.session.user_id
+      }
+    });
+    const budgetData = budget.map((budget) => budget.get({ plain: true }));
+
+    res.render('transactions-add', { layout: 'dashboard', transactionData, budgetData });
+  } catch (err) {
+    console.log(err);
+  }
+});
 // transactions by id
 router.get('/transactions/add', async (req, res) => {
   try {
