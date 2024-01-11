@@ -1,8 +1,6 @@
 const changePasswordBtn = document.querySelector('#changePasswordBtn');
-console.log(changePasswordBtn)
 
 let id = changePasswordBtn.dataset.id;
-console.log(id)
 
 document
   .getElementById('changePasswordForm')

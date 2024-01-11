@@ -1,9 +1,9 @@
-const submitBtn = document.querySelector('#submitBtn');
-const cancelBtn = document.querySelector('#cancelBtn');
+const submitBtn = document.querySelector('#submitTBtn');
+const cancelBtn = document.querySelector('#cancelTBtn');
 
 cancelBtn.addEventListener('click', async (e) => {
   e.preventDefault();
-  window.location.replace('/dashboard/budgets');
+  window.location.replace('/dashboard/Transactions');
 });
 
 submitBtn.addEventListener('click', async (e) => {
@@ -24,7 +24,7 @@ submitBtn.addEventListener('click', async (e) => {
   });
 
   if (response.ok) {
-    window.location.replace('/dashboard/Transactions');
+    window.location.replace(`/dashboard/budgets/${budgetId}`);
   } else {
     alert('Failed to create Transaction');
   }

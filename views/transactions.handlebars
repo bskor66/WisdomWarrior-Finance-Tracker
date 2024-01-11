@@ -1,5 +1,4 @@
-{{!< layouts/dashboard}} 
-  <main class="flex flex-col p-6 bg-gray-100 min-h-screen mb-0 bg-gray-700">
+{{!< layouts/dashboard}} <main class="flex flex-col p-6 bg-gray-100 min-h-screen mb-0 bg-gray-700">
   <header class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-white  ">Transactions</h1>
     <button
@@ -8,45 +7,89 @@
     </button>
   </header>
 
-  {{#unless Transactions.length}}
-    <section class="">
-      <div class="" >
-        <div class="">
-          <h3 class="">No Transactions</h3>
-          <p class="">You have not created any Transactions yet.</p>
-        </div>
-       
-      </div>
-    </section>
-  {{else}}
-    <div>
-      <div class="">
-        <div class="">
-          <table class="">
-            <thead class="data-table-header">
-              <tr class="data-titles">
-                <th class="date">Date</th>
-                <th class="budgetType">Budget Type</th>
-                <th class="amount">Amount</th>
-                <th class="expense">Expense?</th>
-                <th class="delete">Delete?</th>
-              </tr>
-            </thead>
-            <tbody class="data-table-body">
-              {{#each Transactions}}
-                <tr class="data-row">
-                  <td class="date">{{date}}</td>
-                  <td class="budget-type">{{budgetType}}</td>
-                  <td class="transaction-amount">{{transactionAmount}}</td>
-                  <td class="is-expense">{{isExpense}}</td>
-                  <td class="delete"><button class="delete-btn"></button>Delete</td>
-                </tr>
-              {{/each}}
+  <div class="border rounded-lg w-vw bg-gray-900">
+    <div class="relative w-full overflow-auto">
+      <div class="relative w-full overflow-auto p-2">
+        <table class="text-white w-full caption-bottom text-sm ">
+          <thead class="data-table-header">
+            <tr class="data-titles">
+              <th class="date w-max-fit h-12 pr-2 text-left align-middle font-medium text-muted-foreground">Date</th>
+              <th class="budgetType w-max-fit h-12 pr-2 text-left align-middle font-medium text-muted-foreground">Budget
+                Type</th>
+              <th class="amount w-max-fit h-12 pr-2 text-left align-middle font-medium text-muted-foreground">Amount
+              </th>
+              <th class="expense w-max-fit h-12 pr-2 text-left align-middle font-medium text-muted-foreground">Expense
+              </th>
+              {{!-- --}}
+            </tr>
+          </thead>
+          <tbody class="data-table-body text-white [&amp;_tr:last-child]:border-0 p-2">
+          {{#each transactionData}}
+            {{#if is_expense}}
+             <tr class="data-row border-b transition-colors hover:bg-muted/70 data-[state=selected]:bg-muted bg-red-800/50">
+            {{else}}
+            <tr class="data-row border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted bg-green-500/50">
+            {{/if}}
+            
+            <td data-timestamp="{{createdAt}}" class="created-at p-2 align-middle"></td> 
+              <td data-budget-id="{{budget_id}}"
+                class="budget-name  p-2 align-middle font-medium text-white text-2xl font-semibold leading-none tracking-tight text-center transition ease-in-out">
+                {{budget_id}}
+                 </td>
+            <td 
+            class="transaction-expense p-2 align-middle"> -
+              ${{transaction_amount}}
+            </td>
+            <td class="p-2 align-middle font-medium">{{is_expense}}</td>
+           <td class="p-2 align-middle">
+                  <div class="flex flex-col md:flex-row lg:flex-row gap-2 justify-end">
+                    <button data-id="{{id}}"
+                      class=" edit-transaction max-w-24 text-white inline-flex bg-blue-500 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                      Edit
+                    </button>
+                    <button data-id="{{id}}"
+                      class=" delete-transaction max-w-24 text-white inline-flex bg-gray-900 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                      Delete
+                    </button>
+                  </div>
+                </td>
+            </tr>
+             <dialog id="editTransactionModal" class="modal p-6 rounded-lg">
+                <div class="modal flex flex-wrap justify-center items-end w-full max-w-md mx-auto">
+                  <div class="flex flex-col space-y-2 w-2/3">
+                    <label id="transaction-amount"
+                      class="text-sm text-center font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      for="amount">
+                      Transaction Amount
+                    </label>
+                    <input
+                      class="text-white bg-gray-500 flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 bg-[#f0f0f0] dark:bg-[#1a1a1a]"
+                      id="transaction-update" placeholder="Enter new amount" type="number" />
+                  </div>
+                  <div class="w-100">
+                    <button id="saveTransactionModal" data-id="{{id}}"
+                      class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
+                      Save
+                    </button>
+                    <button id="closeTransactionModal"
+                      class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </dialog>
             </tbody>
-          </table>
+          {{/each}}
+        </table>
+        {{#unless transactionData}}
+        <div class="flex flex-col items-center justify-center p-6">
+          <h3 class="text-2xl font-semibold text-white">No Transactions</h3>
+          <p class="text-sm text-white text-muted-foreground">Add a transaction to get started</p>
         </div>
+        {{/unless}}
       </div>
     </div>
-  {{/unless}}
+  </div>
+
   <script src="/js/Transactions/transactions.js"></script>
-</main>
+  </main>
