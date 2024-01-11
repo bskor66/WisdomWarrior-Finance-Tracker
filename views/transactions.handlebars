@@ -38,15 +38,15 @@
                 {{budget_id}}
               </td>
               {{#if is_expense}}
-           <td class="transaction-expense p-2 align-middle"> -
+              <td class="transaction-expense p-2 align-middle"> -
                 ${{transaction_amount}}
               </td>
               {{else}}
-            <td class="transaction-expense p-2 align-middle"> +
+              <td class="transaction-expense p-2 align-middle"> +
                 ${{transaction_amount}}
               </td>
               {{/if}}
-              
+
               <td class="p-2 align-middle font-medium">{{is_expense}}</td>
               <td class="p-2 align-middle">
                 <div class="flex flex-col md:flex-row lg:flex-row gap-2 justify-end">
@@ -74,8 +74,8 @@
                     id="transaction-update" placeholder="Enter new amount" type="number" />
                 </div>
                 <div class="w-100">
-                  <button id="saveTransactionModal" data-id="{{id}}"
-                    class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
+                  <button  data-id="{{id}}"
+                    class="saveTransactionModal inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
                     Save
                   </button>
                   <button id="closeTransactionModal"
