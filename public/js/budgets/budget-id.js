@@ -7,7 +7,7 @@ const deleteTransaction = document.querySelectorAll('.delete-transaction');
 const editTransaction = document.querySelectorAll('.edit-transaction');
 const editTransactionModal = document.querySelector('#editTransactionModal');
 const closeTransactionModal = document.querySelector('#closeTransactionModal');
-const saveTransactionModal = document.querySelector('#saveTransactionModal');
+const saveTransactionModal = document.querySelectorAll('.saveTransactionModal');
 const addTransaction = document.querySelector('#add-transaction');
 // console.log(transactionExpense)
 
@@ -17,13 +17,14 @@ backToBudgets.addEventListener('click', () => {
 
 addTransaction.addEventListener('click', () => {
   window.location.href = '/dashboard/transactions/add';
-  
+
 });
 
 editTransaction.forEach((transaction) => {
   transaction.addEventListener('click', async (e) => {
     e.preventDefault();
     const transactionId = transaction.dataset.id;
+    console.log(transactionId)
     const response = await fetch(`/api/transactions/${transactionId}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
@@ -31,34 +32,31 @@ editTransaction.forEach((transaction) => {
     if (response.ok) {
       const transaction = await response.json();
       document.querySelector('#transaction-amount').value = transaction.transaction_amount;
-      editTransactionModal.showModal(); 
+      editTransactionModal.showModal();
+
+      saveTransactionModal.forEach(transaction => {
+        transaction.addEventListener('click', async (e) => {
+          e.preventDefault();
+      
+          // const transactionId = transaction.dataset.id;
+          // console.log(transactionId)
+      
+          let transaction_amount = document.querySelector('#transaction-update').value;
+          const response = await fetch(`/api/transactions/${transactionId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ transaction_amount }),
+            headers: { 'Content-Type': 'application/json' },
+          });
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            alert('Failed to update transaction');
+          }
+        });
+      })
     }
   });
 });
-
-saveTransactionModal.addEventListener('click', async (e) => {
-  e.preventDefault();
-
-  const transactionId = e.target.dataset.id;
-  console.log(transactionId)
-
-  let transaction_amount = document.querySelector('#transaction-update').value;
-  const response = await fetch(`/api/transactions/${transactionId}`, {
-    method: 'PUT',
-    body: JSON.stringify({ transaction_amount }),
-    headers: { 'Content-Type': 'application/json' },
-  });
-  if (response.ok) {
-    window.location.reload();
-  } else {
-    alert('Failed to update transaction');
-  }
-});
-
-closeTransactionModal.addEventListener('click', () => {
-  editTransactionModal.close();
-});
-
 
 deleteTransaction.forEach((transaction) => {
   transaction.addEventListener('click', async (e) => {
@@ -75,6 +73,16 @@ deleteTransaction.forEach((transaction) => {
     }
   });
 });
+
+
+
+
+closeTransactionModal.addEventListener('click', () => {
+  editTransactionModal.close();
+});
+
+
+
 
 createdAt.forEach((date) => {
   const dateCreated = date.dataset.timestamp;
