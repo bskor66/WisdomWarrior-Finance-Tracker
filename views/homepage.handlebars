@@ -1,52 +1,51 @@
-{{!< layouts/main}}
-<header class='animated-gradient h-screen text-center'>
-  <div
-    class='container mx-auto px-6 h-full flex flex-col justify-center items-center'
-  >
+{{!< layouts/main}} <header class='animated-gradient h-screen text-center'>
+  <div class='container mx-auto px-6 h-full flex flex-col justify-center items-center'>
     <h1 class='text-5xl font-bold mb-2 text-white'>Track your finances,
       effortlessly.</h1>
     <h2 class='text-xl mb-8 text-white'>Join millions of users who gain peace of
       mind with our app.</h2>
-    <button
-      class='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded inline-block whitespace-nowrap'
-    >Get Started</button>
+    <a href="#aboutUs">
+      <button
+        class='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded inline-block whitespace-nowrap'>Get
+        Started</button>
+    </a>
   </div>
-</header>
-<section class='container mx-auto py-12'>
-  <h3 class='text-center text-3xl font-semibold mb-10'>Why Choose Us?</h3>
-  <div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
-    <div class='text-center shadow-lg p-6 rounded-lg'>
-      <h4 class='font-semibold text-lg mb-2'>Real-Time Tracking</h4>
-      <p class='text-gray-600'>Get instant insights into your spending and
-        saving habits to make better financial decisions.</p>
-    </div>
-    <div class='text-center shadow-lg p-6 rounded-lg'>
-      <h4 class='font-semibold text-lg mb-2'>Secure & Private</h4>
-      <p class='text-gray-600'>Your data is protected. We never share your
-        information with third parties.</p>
-    </div>
-    <div class='text-center shadow-lg p-6 rounded-lg'>
-      <h4 class='font-semibold text-lg mb-2'>User-Friendly Interface</h4>
-      <p class='text-gray-600'>Our intuitive design makes it easy for anyone to
-        manage their finances without any hassle.</p>
-    </div>
-  </div>
-</section>
-<section class='bg-blue-100 py-12'>
-  <div class='container mx-auto text-center'>
-    <h3 class='text-3xl font-semibold mb-6'>Hear From Our Users</h3>
-    <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
-      <div class='bg-white shadow-lg p-6 rounded-lg'>
-        <p class='text-gray-600 mb-4'>"Since I started using FinanceTracker,
-          I've been able to save more and understand where my money goes each
-          month. Absolutely love it!"</p>
-        <div class='font-semibold'>- Blake S.</div>
+  </header>
+  <section id="aboutUs" class='container mx-auto py-12 min-h-fit my-14'>
+    <h3 class='text-center text-3xl font-semibold mb-10'>Why Choose Us?</h3>
+    <div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
+      <div class='text-center shadow-lg p-6 rounded-lg'>
+        <h4 class='font-semibold text-lg mb-2'>Real-Time Tracking</h4>
+        <p class='text-gray-600'>Get instant insights into your spending and
+          saving habits to make better financial decisions.</p>
       </div>
-      <div class='bg-white shadow-lg p-6 rounded-lg'>
-        <p class='text-gray-600 mb-4'>"The real-time tracking feature is a
-          game-changer. I feel more in control of my finances than ever before."</p>
-        <div class='font-semibold'>- Ronald M.</div>
+      <div class='text-center shadow-lg p-6 rounded-lg'>
+        <h4 class='font-semibold text-lg mb-2'>Secure & Private</h4>
+        <p class='text-gray-600'>Your data is protected. We never share your
+          information with third parties.</p>
+      </div>
+      <div class='text-center shadow-lg p-6 rounded-lg'>
+        <h4 class='font-semibold text-lg mb-2'>User-Friendly Interface</h4>
+        <p class='text-gray-600'>Our intuitive design makes it easy for anyone to
+          manage their finances without any hassle.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  <section class='bg-blue-100 pt-20 pb-24 min-h-fit '>
+    <div class='container mx-auto text-center'>
+      <h3 class='text-3xl font-semibold mb-6'>Hear From Our Users</h3>
+      <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+        <div class='bg-white shadow-lg p-6 rounded-lg'>
+          <p class='text-gray-600 mb-4'>"Since I started using FinanceTracker,
+            I've been able to save more and understand where my money goes each
+            month. Absolutely love it!"</p>
+          <div class='font-semibold'>- Blake S.</div>
+        </div>
+        <div class='bg-white shadow-lg p-6 rounded-lg'>
+          <p class='text-gray-600 mb-4'>"The real-time tracking feature is a
+            game-changer. I feel more in control of my finances than ever before."</p>
+          <div class='font-semibold'>- Ronald M.</div>
+        </div>
+      </div>
+    </div>
+  </section>
