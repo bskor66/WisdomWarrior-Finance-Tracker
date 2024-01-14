@@ -9,7 +9,7 @@ const editTransactionModal = document.querySelector('#editTransactionModal');
 const closeTransactionModal = document.querySelector('#closeTransactionModal');
 const saveTransactionModal = document.querySelectorAll('.saveTransactionModal');
 const addTransaction = document.querySelector('#add-transaction');
-// console.log(transactionExpense)
+const budgetWarning = document.querySelector('#budgetWarning');
 
 backToBudgets.addEventListener('click', () => {
   window.location.href = '/dashboard/budgets';
@@ -37,10 +37,7 @@ editTransaction.forEach((transaction) => {
       saveTransactionModal.forEach(transaction => {
         transaction.addEventListener('click', async (e) => {
           e.preventDefault();
-      
-          // const transactionId = transaction.dataset.id;
-          // console.log(transactionId)
-      
+
           let transaction_amount = document.querySelector('#transaction-update').value;
           const response = await fetch(`/api/transactions/${transactionId}`, {
             method: 'PUT',
@@ -74,15 +71,35 @@ deleteTransaction.forEach((transaction) => {
   });
 });
 
+let expenseTotal = 0
+transactionExpense.forEach((transaction) => {
+  const expense = parseInt(transaction.dataset.expense);
+  expenseTotal += expense;
+});
+
+let incomeTotal = 0
+transactionIncome.forEach((transaction) => {
+  const income = parseInt(transaction.dataset.income);
+  incomeTotal += income;
+});
+
+let remaining = dollarAmountRemaining.dataset.remaining - expenseTotal;
+
+if (remaining < 0) {
+  budgetWarning.classList.remove('hidden');
+  dollarAmountRemaining.classList.add('text-red-500', 'font-bold');
+
+} else {
+  budgetWarning.classList.add('hidden');
+}
+
+dollarAmountRemaining.textContent = remaining;
 
 
 
 closeTransactionModal.addEventListener('click', () => {
   editTransactionModal.close();
 });
-
-
-
 
 createdAt.forEach((date) => {
   const dateCreated = date.dataset.timestamp;
@@ -104,22 +121,4 @@ createdAt.forEach((date) => {
   // console.log(formattedDate);
 
 });
-
-let expenseTotal = 0
-transactionExpense.forEach((transaction) => {
-  const expense = parseInt(transaction.dataset.expense);
-  expenseTotal += expense;
-});
-
-let incomeTotal = 0
-transactionIncome.forEach((transaction) => {
-  const income = parseInt(transaction.dataset.income);
-  incomeTotal += income;
-});
-
-let remaining = dollarAmountRemaining.dataset.remaining - expenseTotal;
-
-dollarAmountRemaining.textContent = remaining || dollarAmountRemaining.dataset.remaining;
-
-
 
