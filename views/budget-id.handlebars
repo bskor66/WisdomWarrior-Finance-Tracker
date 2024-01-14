@@ -1,4 +1,4 @@
-{{!< layouts/dashboard}} <main class="flex flex-col p-6 bg-gray-100 min-h-screen mb-0 bg-gray-700">
+{{!< layouts/dashboard}} <main class="flex flex-col p-2 bg-gray-100 min-h-screen mb-0 bg-gray-700">
   <header class="flex justify-between items-center mb-6">
     <div>
       <h1 class="text-2xl font-bold text-white  ">Budgets</h1>
@@ -14,10 +14,10 @@
       </button>
     </div>
   </header>
-  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-4">
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
     <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
       <div class=" bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm ">
-        <div class="flex flex-col space-y-1.5 p-6">
+        <div class="flex flex-col space-y-1.5 p-2">
           <h3 data-id="{{budgetData.id}}"
             class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center transition ease-in-out">
             {{budgetData.name}}</h3>
@@ -29,7 +29,7 @@
     </div>
     <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
       <div class=" bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm ">
-        <div class="flex flex-col space-y-1.5 p-6">
+        <div class="flex flex-col space-y-1.5 p-2">
           <h3
             class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center transition ease-in-out">
             Remaining</h3>
@@ -89,7 +89,7 @@
                   </div>
                 </td>
               </tr>
-              <dialog id="editTransactionModal" class="modal p-6 rounded-lg">
+              <dialog id="editTransactionModal" class="modal p-2 rounded-lg">
                 <div class="modal flex flex-wrap justify-center items-end w-full max-w-md mx-auto">
                   <div class="flex flex-col space-y-2 w-2/3">
                     <label id="transaction-amount"
@@ -117,7 +117,7 @@
             {{/each}}
           </table>
           {{#unless transactionsData}}
-          <div class="flex flex-col items-center justify-center p-6">
+          <div class="flex flex-col items-center justify-center p-2">
             <h3 class="text-2xl font-semibold text-white">No Transactions</h3>
             <p class="text-sm text-white text-muted-foreground">Add a transaction to get started</p>
             {{/unless}}

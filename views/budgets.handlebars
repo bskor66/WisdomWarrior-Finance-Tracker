@@ -1,4 +1,4 @@
-{{!< layouts/dashboard}} <main class="flex flex-col p-6 bg-gray-100 min-h-screen mb-0 bg-gray-700">
+{{!< layouts/dashboard}} <main class="flex flex-col p-2 bg-gray-100 min-h-screen mb-0 bg-gray-700">
   <header class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-white  ">Budgets</h1>
     <button
@@ -7,10 +7,10 @@
     </button>
   </header>
 
-  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-8">
     {{#unless budgetData.length}}
     <div class="bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm">
-      <div class="flex flex-col space-y-1.5 p-6">
+      <div class="flex flex-col space-y-1.5 p-2">
         <h3 class="text-2xl font-semibold leading-none tracking-tight text-center text-white">No Budgets</h3>
         <p class="text-sm text-muted-foreground text-center text-white">You have not created any budgets yet.</p>
       </div>
@@ -26,7 +26,7 @@
   {{#each budgetData}}
   <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
     <div class=" bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm ">
-      <div class="flex flex-col space-y-1.5 p-6">
+      <div class="flex flex-col space-y-1.5 p-2">
         <h3 data-id="{{id}}"
           class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center hover:cursor-pointer hover:scale-125 transition ease-in-out">
           {{name}}</h3>
@@ -44,7 +44,7 @@
       </div>
     </div>
   </div>
-  <dialog id="editBudgetModal" class="modal p-6 rounded-lg">
+  <dialog id="editBudgetModal" class="modal p-2 rounded-lg">
     <div class="modal-box">
       <form class="space-y-4">
         <div class="space-y-2">
