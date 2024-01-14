@@ -1,49 +1,55 @@
-{{!< layouts/dashboard}}
-<section class='flex flex-wrap gap-4'>
+{{!< layouts/dashboard}} <section class='flex flex-wrap gap-4'>
   <div class='flex flex-1 flex-wrap gap-4'>
-    <div
-      class='bg-gray-900 text-white rounded-lg shadow-lg p-4 sm:p-8 min-w-64 flex-1'
-    >
+    <div class='bg-gray-900 text-white rounded-lg shadow-lg p-4 sm:p-8 min-w-64 flex-1'>
       <h2 class='text-lg sm:text-2xl font-bold mb-6 text-center'>Budgets</h2>
-      <ul class='list-disc'>
+      <ul class='list-none'>
         {{#each budgetData}}
-          <li class='mb-4'>
-            <div>
-              {{this.name}}
-              -
-              {{this.amount}}
-            </div>
-          </li>
+        <a href="/dashboard/budgets/{{this.id}}" class="cursor-pointer w-fit">
+          <div class="bg-gray-700 w-fit px-2 rounded">
+            <li class='mb-4'>
+              <div class="flex flex-col">
+                <p>
+                  <span class="font-bold">Budget:</span> {{this.name}}
+                </p>
+                <p class="mt-2">
+                  <span class="font-bold">Allocated:</span> ${{this.amount}}
+                </p>
+              </div>
+            </li>
+          </div>
+        </a>
         {{/each}}
       </ul>
     </div>
-    <div
-      class='bg-gray-900 text-white rounded-lg shadow-lg p-4 sm:p-8 min-w-64 flex-1'
-    >
+    <div class='bg-gray-900 text-white rounded-lg shadow-lg p-4 sm:p-8 min-w-64 flex-1'>
       <h2 class='text-lg sm:text-2xl font-bold mb-6 text-center'>Recent
         Transactions</h2>
-      <ul class='list-disc pl-5'>
+      <ul class='pl-5'>
         {{#each transactionData}}
-          <li class='mb-4'>
-            <div class='font-bold'>Transaction:</div>
-            <ul class='list-inside list-disc'>
-              <li>
-                <span class='font-semibold'>Date/Time:</span>
-                {{formatDate this.createdAt}}
-              </li>
-              <li>
-                <span class='font-semibold'>Amount:</span>
-                ${{this.transaction_amount}}
-              </li>
-              <li>
-                <span class='font-semibold'>Type:</span>
-                {{#if this.is_expense}}Expense{{else}}Income{{/if}}
-              </li>
-            </ul>
-          </li>
+        <a href="/dashboard/transactions" class="cursor-pointer w-fit">
+          <div class="bg-gray-700 w-fit px-2 rounded">
+            <li class='mb-4'>
+              <div class='font-bold'>Transaction:</div>
+              <ul class='list-none'>
+                <li>
+                  <span class='font-semibold'>Date/Time:</span>
+                  {{formatDate this.createdAt}}
+                </li>
+                <li>
+                  <span class='font-semibold'>Amount:</span>
+                  ${{this.transaction_amount}}
+                </li>
+                <li>
+                  <span class='font-semibold'>Type:</span>
+                  {{#if this.is_expense}}Expense{{else}}Income{{/if}}
+                </li>
+              </ul>
+            </li>
+          </div>
+        </a>
         {{/each}}
       </ul>
 
     </div>
   </div>
-</section>
+  </section>
