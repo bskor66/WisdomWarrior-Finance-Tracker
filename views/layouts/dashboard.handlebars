@@ -13,13 +13,19 @@
     <nav class='flex flex-col bg-gray-900 w-screen sm:w-64 px-12 pt-4 pb-6 '>
       <!-- Side NavLinks -->
       <div class='mt-4'>
-        <div class='text-xl text-white font-semibold'>
+        <div class='text-center flex justify-between sm:block text-xl text-white font-semibold'>
           <a href='/' class='text-current no-underline'>
             Finance<span class='text-blue-400'>Tracker</span>
           </a>
+          <div id="menuBtn" class="max-w-fit sm:hidden relative top-1 hover:cursor-pointer">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </div>
         </div>
       </div>
-      <div class='mt-4'>
+      <div id="menuContent" class='mt-4 hidden sm:block'>
         <div class='flex items-center mt-4'>
           <a href='/dashboard'
             class='w-full text-center text-white bg-blue-500 hover:bg-blue-700 text-sm font-medium mb-2 px-4 py-2 rounded'>Dashboard</a>
@@ -44,5 +50,7 @@
     </main>
   </div>
 </body>
+
+<script src="/js/dashboard.js"></script>
 
 </html>

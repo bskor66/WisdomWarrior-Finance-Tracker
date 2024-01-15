@@ -1,55 +1,56 @@
-{{!< layouts/dashboard}} <div class="rounded-lg border bg-card text-card-foreground shadow-sm bg-slate-800 p-10">
-    <div class="space-y-2 text-center">
-        <h1 class="text-3xl font-bold">Add New Transaction</h1>
-        <p class="text-gray-500 dark:text-gray-400">
-            Enter your transactions details below
-        </p>
-    </div>
-    <div class="space-y-4">
-        <div class="space-y-2">
-            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                for="budget-dropdown">Transactions Type
-            </label>
-            <div>
-                <select
-                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    id="budget-dropdown">
-                    {{#each budgetData}}
-                    <option value={{id}} data-id={{id}}>{{name}}</option>
-                    {{/each}}
-                </select>
-            </div>
+{{!< layouts/dashboard}} <div
+  class="text-center rounded-lg border bg-card text-card-foreground shadow-sm bg-gray-900 p-10">
+  <div class="space-y-2 text-center">
+    <h1 class="text-white text-3xl font-bold">Add New Transaction</h1>
+    <p class="text-gray-500 dark:text-gray-400">
+      Enter your transactions details below
+    </p>
+  </div>
+  <div class="space-y-4">
+    <div class="space-y-2">
+      <label class="text-white text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        for="budget-dropdown">Transactions Type
+      </label>
+      <div>
+        <select
+          class="lg:mx-auto xl:w-1/2 md:mx-auto md:w-2/3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          id="budget-dropdown">
+          {{#each budgetData}}
+          <option value={{id}} data-id={{id}}>{{name}}</option>
+          {{/each}}
+        </select>
+      </div>
 
-        </div>
-        <div class="space-y-2">
-            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                for="budget-amount">Transactions Amount
-            </label>
-            <input required="true"
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                id="budget-amount" placeholder="200" required="" type="number">
-        </div>
-        
-        <div class="space-y-2">
-            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            for="isExpense-dropdown">Is this an Expense?
-        </label>
-            <select
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                id="isExpense-dropdown">
-                <option value="true" selected="selected">Yes</option>
-                <option value="false">No</option>
-            </select>
-        </div>
-            <button id="submitTBtn"
-            class="inline-flex bg-blue-500 text-white items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
-            type="submit">
-            Submit</button>
-        <button id="cancelTBtn"
-            class="inline-flex bg-blue-500 text-white items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
-            type="submit">
-            Cancel</button>
-        
     </div>
+    <div class="space-y-2">
+      <label class="text-white text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        for="budget-amount">Transactions Amount
+      </label>
+      <input required="true"
+        class="lg:mx-auto xl:w-1/2 md:mx-auto md:w-2/3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        id="budget-amount" placeholder="200" required="" type="number">
     </div>
-    <script src="/js/Transactions/add-transactions.js"></script>
+
+    <div class="space-y-2">
+      <label class="text-white text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        for="isExpense-dropdown">Should this count against your budget?
+      </label>
+      <select
+        class="lg:mx-auto xl:w-1/2 md:mx-auto md:w-2/3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        id="isExpense-dropdown">
+        <option value="true" selected="selected">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+    <button id="submitTBtn"
+      class="text-white w-fit mx-auto inline-flex bg-blue-500 text-white items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      type="submit">
+      Submit</button>
+    <button id="cancelTBtn"
+      class="text-white w-fit mx-auto inline-flex text-white items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      type="submit">
+      Cancel</button>
+
+  </div>
+  </div>
+  <script src="/js/Transactions/add-transactions.js"></script>
