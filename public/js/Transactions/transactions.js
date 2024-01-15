@@ -6,7 +6,7 @@ const closeTransactionModal = document.querySelector('#closeTransactionModal');
 const saveTransactionModal = document.querySelectorAll('.saveTransactionModal');
 const addTransaction = document.querySelectorAll('.add-transaction');
 const budgetName = document.querySelectorAll('.budget-name');
-const budgetID = document.querySelectorAll('[data-budgetId]');
+// const budgetID = document.querySelectorAll('[data-budgetId]');
 addTransaction.forEach(button => {
     button.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -74,7 +74,7 @@ deleteTransaction.forEach((transaction) => {
 createdAt.forEach((date) => {
   const dateCreated = date.dataset.timestamp;
   const originalDate = new Date(dateCreated);
-
+  
   const year = originalDate.getFullYear().toString().slice(2); // Get the last two digits of the year
   const month = (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
   const day = originalDate.getDate().toString().padStart(2, '0');
@@ -91,3 +91,56 @@ createdAt.forEach((date) => {
   // console.log(formattedDate);
 
 });
+
+// budgetName.forEach((budget) =>{
+//   console.log(budget.dataset.budgetid)
+
+
+//   budget.addEventListener('DOMContentLoaded', async (e) => {
+//     e.preventDefault();
+//       const budgetId = budget.dataset.budgetid;
+//       console.log(budgetId)
+//       const response = await fetch(`/api/budgets/${budgetId}`, {
+//         method: 'GET',
+//         headers: { 'Content-Type': 'application/json' },
+//       });
+//       console.log(response)
+//       if (response.ok) {
+//         const budget = await response.json();
+//         document.querySelector('.budget-name').textContent = budget.name;
+//         console.log(budget)
+            
+          
+        
+//       } else{
+//         console.log("there is an error")
+//       }
+//   })
+  
+
+// })
+budgetName.forEach((budget) => {
+  // console.log(budget.dataset.budgetid);
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const budgetId = budget.dataset.budgetid;
+    try {
+      const response = await fetch(`/api/budgets/${budgetId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        const budgetData = await response.json();
+        budget.textContent = budgetData.name;
+      } else {
+        console.log("There is an error");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  });
+});
+
+  // budgetID
+  // budgetName.
