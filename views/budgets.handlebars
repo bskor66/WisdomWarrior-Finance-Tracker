@@ -6,6 +6,19 @@
       Add Budget
     </button>
   </header>
+  
+  <section class="gap-2 mb-8">
+ <div class="bg-gray-900 rounded-lg border bg-card text-card-foreground shadow-sm p-2">
+      <h3 class="text-3xl font-semibold leading-none tracking-tight text-center text-white p-1">Total Budget</h3>
+      {{#if budgetData.length}}
+      <p class="text-md text-white text-muted-foreground text-center p-1">$<span
+              id="dollarAmountTotal"></span></p>
+      {{else}}
+      <p class="text-md text-white text-muted-foreground text-center p-1">You have no Budgets</p>
+      {{/if}}
+       
+    </div>
+    </section>
 
   <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-8">
     {{#unless budgetData.length}}
@@ -30,7 +43,7 @@
         <h3 data-id="{{id}}"
           class="budget-name text-white text-2xl font-semibold leading-none tracking-tight text-center hover:cursor-pointer hover:scale-125 transition ease-in-out">
           {{name}}</h3>
-        <p class="text-sm text-white text-muted-foreground text-center">Allocated: ${{amount}}</p>
+        <p class="text-sm text-white text-muted-foreground text-center" data-amount="{{amount}}">Allocated: ${{amount}}</p>
       </div>
       <div class="flex justify-center mt-4 gap-2 mb-4">
         <button data-id="{{id}}"

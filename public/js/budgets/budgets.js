@@ -5,6 +5,9 @@ const saveChangesBtn = document.querySelector('#saveChangesBtn');
 const cancelChangesBtn = document.querySelector('#cancelChangesBtn');
 const editBudgetModal = document.querySelector('#editBudgetModal');
 const budgetName = document.querySelectorAll('.budget-name');
+const dollarAmountTotal = document.querySelector('#dollarAmountTotal');
+const budgetID = document.querySelectorAll('[data-amount]');
+
 // console.log(deleteBudget)
 
 budgetName.forEach(card => {
@@ -82,4 +85,11 @@ cancelChangesBtn.addEventListener('click', async (e) => {
   
 });
 
+let bTotal = 0;
 
+budgetID.forEach((budget)=>{
+const budgetamount = parseInt(budget.dataset.amount);
+bTotal += budgetamount;
+})
+
+dollarAmountTotal.textContent = bTotal;
